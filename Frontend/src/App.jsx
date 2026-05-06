@@ -1,22 +1,44 @@
-// Importamos los componentes de cada página
-import LandingPage  from "../src/components/landing_page";
-import CrearCuenta  from "../src/components/crear_cuenta";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Componente raíz de la aplicación
-// Usamos window.location.pathname para navegar entre páginas
-// sin necesitar instalar React Router todavía
+import Navbar from './components/landing_page/Navbar';
+import Hero from './components/landing_page/Hero';
+import Services from './components/landing_page/Services';
+import About from "./components/landing_page/About";
+import Testimonials from './components/landing_page/Testimonials';
+import CTA from './components/landing_page/CTA';
+import Footer from './components/landing_page/Footer';
+
+import Register from "./components/auth/Register";
+import PatientForm from "./components/patient/PatientForm";
+
+import './styles/landing_page.css';
+
 function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Landing */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Navbar />
+              <Hero />
+              <Services />
+              <About />
+              <Testimonials />
+              <CTA />
+              <Footer />
+            </>
+          }
+        />
 
-  // Leemos la ruta actual del navegador
-  // Ejemplos: "/" = landing, "/register" = crear cuenta
-  const ruta = window.location.pathname;
-
-  // Mostramos la página según la ruta actual
-  if (ruta === "/register") return <CrearCuenta />;
-
-  // Por defecto mostramos la landing page
-  return <LandingPage />;
+        {/* Registro */}
+        <Route path="/register" element={<Register />} />
+        {/* Registro de paciente */}
+        <Route path="/paciente" element={<PatientForm />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-// Exportamos App como componente por defecto
 export default App;
