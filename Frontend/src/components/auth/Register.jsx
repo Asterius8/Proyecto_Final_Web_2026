@@ -43,7 +43,7 @@ function Register() {
       const data = await res.json();
 
       if (data.ok) {
-        localStorage.setItem("user", JSON.stringify(data));
+        localStorage.setItem("email", email);
 
         setErrores([]);
 

@@ -1,0 +1,120 @@
+'use strict';
+
+const db = require("../config/db2");
+
+// ================= INSERTAR PACIENTE =================
+
+function agregarPaciente(
+    nombre,
+    primer_apellido,
+    segundo_apellido,
+    fecha_nac,
+    sexo,
+    telefono,
+    email,
+    tipo_seguro,
+    contacto_emergencia,
+    telefono_emergencia,
+    idCuenta
+) {
+
+    return new Promise((resolve, reject) => {
+
+        const sql = `
+        INSERT INTO pacientes(
+            Nombre,
+            Apellido_Paterno,
+            Apellido_Materno,
+            Fecha_Nac,
+            Sexo,
+            Telefono,
+            Email,
+            Tipo_Seguro,
+            Contacto_Emergencia_Nombre,
+            Contacto_Emergencia_Telefono,
+            id_Cuenta
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+
+        db.query(
+            sql,
+            [
+                nombre,
+                primer_apellido,
+                segundo_apellido,
+                fecha_nac,
+                sexo,
+                telefono,
+                email,
+                tipo_seguro,
+                contacto_emergencia,
+                telefono_emergencia,
+                idCuenta
+            ],
+
+            (err, result) => {
+
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            }
+        );
+    });
+}
+
+// ================= REVISAR DUPLICADO =================
+
+function existePacienteDuplicado(
+    nombre,
+    primer_apellido,
+    segundo_apellido,
+    fecha_nac,
+    sexo,
+    telefono
+) {
+
+    return new Promise((resolve, reject) => {
+
+        const sql = `
+        SELECT Id_Pacientes
+        FROM pacientes
+        WHERE Nombre = ?
+        AND Apellido_Paterno = ?
+        AND Apellido_Materno = ?
+        AND Fecha_Nac = ?
+        AND Sexo = ?
+        AND Telefono = ?
+        LIMIT 1
+        `;
+
+        db.query(
+            sql,
+            [
+                nombre,
+                primer_apellido,
+                segundo_apellido,
+                fecha_nac,
+                sexo,
+                telefono
+            ],
+
+            (err, result) => {
+
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.length > 0);
+                }
+            }
+        );
+    });
+}
+
+// Exportamos funciones
+module.exports = {
+    agregarPaciente,
+    existePacienteDuplicado
+};

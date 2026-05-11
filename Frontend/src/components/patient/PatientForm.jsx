@@ -78,13 +78,15 @@ function PatientForm() {
       return;
     }
 
+    const email = localStorage.getItem("email");
+
     try {
       const res = await fetch("http://localhost:3000/api/paciente", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, email }),
       });
 
       const data = await res.json();
@@ -105,7 +107,8 @@ function PatientForm() {
         });
       }
     } catch (error) {
-      Swal.fire("Error", "No se pudo conectar al servidor", "error");
+      console.error(error); // 👈 abre la consola del navegador (F12)
+      Swal.fire("Error", error.message, "error"); // muestra el error real
     }
   };
 
