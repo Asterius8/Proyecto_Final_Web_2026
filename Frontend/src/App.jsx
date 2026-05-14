@@ -8,7 +8,9 @@ import Testimonials from './components/landing_page/Testimonials';
 import CTA from './components/landing_page/CTA';
 import Footer from './components/landing_page/Footer';
 
-import Register from "./components/register/Register";
+import Register from "./components/Cuenta/Register";
+import Ingresar from "./components/Cuenta/Ingresar";
+
 import PatientForm from "./components/paciente/PatientForm";
 
 import './styles/landing_page.css';
@@ -37,6 +39,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         {/* Registro de paciente */}
         <Route path="/paciente" element={<PatientForm />} />
+        {/* Inicio de sesión */}
+        <Route path="/login" element={<Ingresar />} />
       </Routes>
     </BrowserRouter>
   );

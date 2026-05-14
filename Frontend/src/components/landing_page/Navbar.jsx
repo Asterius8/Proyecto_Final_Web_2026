@@ -27,7 +27,9 @@ function Navbar() {
             </li>
 
             <li>
-              <button className="btn-primary_landing">Iniciar Sesión</button>
+              <Link to="/login" className="btn-primary_landing">
+                Iniciar Sesión
+              </Link>
             </li>
 
             <li>
