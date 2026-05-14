@@ -10,6 +10,7 @@ import Footer from './components/landing_page/Footer';
 
 import Register from "./components/Cuenta/Register";
 import Ingresar from "./components/Cuenta/Ingresar";
+import Dashboard from "./components/paciente/Dashboard";
 
 import PatientForm from "./components/paciente/PatientForm";
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         {/* Registro de paciente */}
         <Route path="/paciente" element={<PatientForm />} />
+        <Route path="/paciente/dashboard" element={<Dashboard />} />
         {/* Inicio de sesión */}
         <Route path="/login" element={<Ingresar />} />
       </Routes>

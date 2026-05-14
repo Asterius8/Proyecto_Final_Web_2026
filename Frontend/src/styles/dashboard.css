@@ -1,0 +1,22 @@
+/* src/styles/mi_estilo.css */
+
+/* Cambiar color del sidebar */
+.main-sidebar {
+  background-color: #1a1a2e !important;
+}
+
+/* Cambiar color de los links del menú */
+.nav-sidebar .nav-link {
+  color: #a0aec0 !important;
+}
+
+/* Cambiar color del link activo */
+.nav-sidebar .nav-link.active {
+  background-color: #e53e3e !important;
+}
+
+/* Cambiar color de la barra superior */
+.main-header {
+  background-color: #ffffff !important;
+  border-bottom: 2px solid #e53e3e;
+}

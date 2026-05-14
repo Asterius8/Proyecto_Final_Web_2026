@@ -152,7 +152,7 @@ exports.login = async (req, res) => {
 
                   if (existePaciente) {
                     // Ya tiene perfil completo, va al dashboard
-                    res.json({ ok: true, redirigir: "/", mensaje: "Login exitoso" });
+                    res.json({ ok: true, redirigir: "/paciente/dashboard", mensaje: "Login exitoso" });
                   } else {
                     // Le falta completar sus datos personales
                     res.json({ ok: true, redirigir: "/paciente", mensaje: "Incompleto" });
