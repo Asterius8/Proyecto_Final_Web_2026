@@ -45,7 +45,7 @@ function Ingresar() {
 
     try {
       // Envía el correo y la contraseña al servidor para ingresar a la cuenta
-      const res = await fetch("http://localhost:3000/api/", { //<- pendiente de definir!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      const res = await fetch("http://localhost:3000/api/login", {
         method: "POST", // Le dice al servidor que quiere enviar datos nuevos
         headers: {
           "Content-Type": "application/json", // Le avisa al servidor que los datos vienen en formato JSON
@@ -64,18 +64,31 @@ function Ingresar() {
         setErrores([]);
 
         // Muestra un popup de éxito y cuando el usuario lo cierra, lo manda a otra página
-        Swal.fire({
-          title: "Sesión iniciada",
-          text: "Bienvenido",
-          icon: "success",
-        }).then(() => {
-          navigate(""); // Lleva al usuario del dashboard <- pendiente de definir!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        });
+        if (data.mensaje === "Login exitoso") {
+          Swal.fire({
+            title: "Sesión iniciada",
+            text: "Bienvenido",
+            icon: "success",
+          }).then(() => {
+            navigate(data.redirigir);
+          });
+
+          // Si le falta completar sus datos personales
+        } else if (data.mensaje === "Incompleto") {
+          Swal.fire({
+            title: "Cuenta incompleta",
+            text: "Por favor, completa tus datos personales",
+            icon: "warning",
+          }).then(() => {
+            navigate(data.redirigir);
+          });
+        } else {
+          navigate(data.redirigir);
+        }
 
         // Limpia los campos de correo y contraseña
         setEmail("");
         setPassword("");
-
       } else {
         // Si el servidor encontró un error, lo muestra en pantalla
         setErrores(data.errores || ["Error desconocido"]);
@@ -97,7 +110,9 @@ function Ingresar() {
           {/* Título principal del formulario */}
           <h2>Iniciar Sesión</h2>
           {/* Texto pequeño debajo del título */}
-          <p className="subtitle">Inicia sesión para acceder</p>
+          <p className="subtitle">
+            Ingresa tus credenciales para acceder a tu cuenta
+          </p>
 
           {/* Solo muestra esta sección si hay errores que mostrar */}
           {errores.length > 0 && (
