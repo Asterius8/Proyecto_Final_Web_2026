@@ -19,7 +19,7 @@ function About() {
               promoviendo estilos de vida saludables.
             </p>
 
-            <a href="#" className="btn btn-primary">
+            <a href="#" className="btn-primary_landing">
               Conoce Nuestro Equipo
             </a>
           </div>

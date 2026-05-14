@@ -113,8 +113,9 @@ function PatientForm() {
   };
 
   return (
-    <div className="container">
-      <form className="form-card" onSubmit={handleSubmit}>
+    <div className="paciente-page">
+    <div className="container2">
+      <form className="form-card2" onSubmit={handleSubmit}>
         <h2>Datos Personales</h2>
         <p className="subtitle">Completa tu información personal</p>
 
@@ -134,36 +135,36 @@ function PatientForm() {
 
         <div className="form-group">
           <label>Sexo</label>
-
           <div className="radio-group">
             <div className="radio-option">
               <input
                 type="radio"
+                id="sexo-m"
                 name="sexo"
                 value="M"
                 onChange={handleChange}
               />
-              <label>Masculino</label>
+              <label htmlFor="sexo-m">Masculino</label>
             </div>
-
             <div className="radio-option">
               <input
                 type="radio"
+                id="sexo-f"
                 name="sexo"
                 value="F"
                 onChange={handleChange}
               />
-              <label>Femenino</label>
+              <label htmlFor="sexo-f">Femenino</label>
             </div>
-
             <div className="radio-option">
               <input
                 type="radio"
+                id="sexo-o"
                 name="sexo"
                 value="O"
                 onChange={handleChange}
               />
-              <label>Otros</label>
+              <label htmlFor="sexo-o">Otros</label>
             </div>
           </div>
         </div>
@@ -179,21 +180,23 @@ function PatientForm() {
           <option value="Ninguno">Ninguno</option>
         </select>
 
-        <h3>Contacto de emergencia</h3>
+        <div className="emergency-card">
+          <h3>Contacto de emergencia</h3>
 
-        <input
-          name="contacto_emergencia"
-          placeholder="Nombre contacto"
-          onChange={handleChange}
-        />
-        <input
-          name="telefono_emergencia"
-          placeholder="Teléfono contacto"
-          onChange={handleChange}
-        />
-
-        <button className="btn-primary">Guardar Datos</button>
+          <input
+            name="contacto_emergencia"
+            placeholder="Nombre contacto"
+            onChange={handleChange}
+          />
+          <input
+            name="telefono_emergencia"
+            placeholder="Teléfono contacto"
+            onChange={handleChange}
+          />
+        </div>
+        <button className="register-btn-primary">Guardar Datos</button>
       </form>
+    </div>
     </div>
   );
 }

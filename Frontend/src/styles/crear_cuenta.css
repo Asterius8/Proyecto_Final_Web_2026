@@ -16,7 +16,7 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.register-page {
+.register-page1 {
     background-image: linear-gradient(135deg, rgba(92, 0, 17, 0.85), rgba(139, 0, 53, 0.85)),
         url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1400&q=80');
     background-size: cover;
@@ -27,24 +27,25 @@
     align-items: center;
 }
 
-.container {
+.container1 {
     width: 100%;
-    max-width: 420px;
-    padding: 20px;
+    max-width: 840px;
+    padding: 10px;
 }
 
-.form-card {
+.form-card1 {
     background: white;
-    padding: 40px 30px;
+    padding: 25px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    max-width: 450px;
+
     width: 100%;
+    max-width: 380px;
+
     margin: 0 auto;
 }
 
-.form-card h2 {
+.form-card1 h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
     color: var(--gold-dark);
@@ -65,7 +66,7 @@ label {
     margin-bottom: 6px;
 }
 
-input {
+.inputs {
     width: 100%;
     padding: 12px;
     border: 2px solid var(--gold-color);
@@ -75,7 +76,7 @@ input {
     transition: all .3s;
 }
 
-input:focus {
+.inputs:focus {
     outline: none;
     border-color: var(--gold-dark);
     box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
@@ -95,7 +96,7 @@ input:focus {
     transition: .3s;
 }
 
-.btn-primary:hover {
+.btn-primary-registre:hover {
     background-color: var(--gold-dark);
     transform: scale(1.05);
     box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
@@ -117,14 +118,14 @@ input:focus {
     text-decoration: underline;
 }
 
-.error-message .error-item {
+.form-card1 .error-message .error-item {
     color: #ff0000 !important;
     font-weight: 900 !important;
     font-size: 15px !important;
     padding: 5px !important;
 }
 
-.error-item {
+.form-card1 .error-item {
     color: #ff0000 !important;
     font-weight: 900 !important;
     font-size: 15px !important;

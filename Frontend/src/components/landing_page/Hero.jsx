@@ -9,11 +9,11 @@ function Hero() {
             Nuestro equipo de especialistas está comprometido con tu bienestar.
           </p>
 
-          <button className="btn btn-primary">
+          <button className="btn-primary_landing">
             Solicitar Cita
           </button>
 
-          <button className="btn btn-outline" style={{ marginLeft: "10px" }}>
+          <button className="btn-outline" style={{ marginLeft: "10px" }}>
             Conocer Servicios
           </button>
         </div>

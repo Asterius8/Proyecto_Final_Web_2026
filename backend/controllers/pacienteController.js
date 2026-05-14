@@ -8,7 +8,6 @@ const {
 
 // Importamos conexión
 const db = require("../config/db");
-const db2 = require("../config/db2");
 
 // Método CREATE
 exports.create = async function (req, res) {

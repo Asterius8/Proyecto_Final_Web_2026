@@ -27,11 +27,11 @@ function Navbar() {
             </li>
 
             <li>
-              <button className="btn btn-primary">Iniciar Sesión</button>
+              <button className="btn-primary_landing">Iniciar Sesión</button>
             </li>
 
             <li>
-              <Link to="/register" className="btn btn-primary">
+              <Link to="/register" className="btn-primary_landing">
                 Registrarse
               </Link>
             </li>

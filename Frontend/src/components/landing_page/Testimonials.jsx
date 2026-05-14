@@ -7,19 +7,19 @@ function Testimonials() {
       inicial: "M",
       nombre: "María González",
       especialidad: "Paciente de Cardiología",
-      texto: "Excelente atención, me sentí muy bien cuidada."
+      texto: "Excelente atención por parte de todo el personal. Me sentí muy bien cuidada durante todo mi tratamiento. Los recomiendo ampliamente."
     },
     {
       inicial: "C",
       nombre: "Carlos Rodríguez",
       especialidad: "Padre de pacientes",
-      texto: "Los pediatras son excelentes y muy atentos."
+      texto: "Llevo a mis hijos aquí desde que nacieron. Los pediatras son excelentes y siempre están disponibles para resolver nuestras dudas."
     },
     {
       inicial: "A",
       nombre: "Ana Martínez",
       especialidad: "Paciente de Psicología",
-      texto: "La atención psicológica cambió mi vida."
+      texto: "La atención psicológica que recibí aquí cambió mi vida. Los profesionales son muy empáticos y el ambiente es muy acogedor."
     }
   ];
 

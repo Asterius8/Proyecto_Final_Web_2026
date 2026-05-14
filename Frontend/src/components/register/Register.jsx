@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [errores, setErrores] = useState([]);
 
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ function Register() {
           text: "Ahora completa tus datos",
           icon: "success",
         }).then(() => {
-          navigate("/paciente"); // 🔥 AQUÍ REDIRIGES
+          navigate("/paciente"); // AQUÍ REDIRIGES
         });
 
         setEmail("");
@@ -66,9 +67,9 @@ function Register() {
   };
 
   return (
-    <div className="register-page">
-      <div className="container">
-        <form className="form-card" onSubmit={handleSubmit}>
+    <div className="register-page1">
+      <div className="container1">
+        <form className="form-card1" onSubmit={handleSubmit}>
           <h2>Crear Cuenta</h2>
           <p className="subtitle">Regístrate para acceder</p>
 
@@ -83,20 +84,22 @@ function Register() {
             </div>
           )}
 
-          <label>Correo</label>
+          <label>Correo electrónico</label>
           <input
+            className="inputs"
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="correo@mail.com"
+            placeholder="Ingresa tu correo electrónico"
           />
 
           <label>Contraseña</label>
           <input
+            className="inputs"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="mínimo 6 caracteres"
+            placeholder="Ingresa tu contraseña"
           />
 
           <button type="submit" className="btn-primary-registre">

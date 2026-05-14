@@ -8,7 +8,7 @@ function CTA() {
           hacia tu bienestar integral.
         </p>
 
-        <a href="#" className="btn btn-outline">
+        <a href="#" className="btn-outline">
           Solicitar Cita
         </a>
       </div>

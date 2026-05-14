@@ -8,8 +8,8 @@ import Testimonials from './components/landing_page/Testimonials';
 import CTA from './components/landing_page/CTA';
 import Footer from './components/landing_page/Footer';
 
-import Register from "./components/auth/Register";
-import PatientForm from "./components/patient/PatientForm";
+import Register from "./components/register/Register";
+import PatientForm from "./components/paciente/PatientForm";
 
 import './styles/landing_page.css';
 
