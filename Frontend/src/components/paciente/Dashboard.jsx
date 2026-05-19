@@ -1,17 +1,19 @@
 import { useState } from "react";
 import "../../styles/dashboard.css";
 import CrearCita from "../paciente/CrearCitas";
+import EditarPerfil2 from "../paciente/EditarPaciente";
 
 function CrearCitas() {
   return <CrearCita />;
 }
 
 function VerCitas() {
-  return <div><h2>Ver Citas</h2><p>Lista de citas aquí...</p></div>;
+  return <div><h2>Editar Perfil</h2><p>Formulario de perfil aquí...</p></div>;
 }
 
 function EditarPerfil() {
-  return <div><h2>Editar Perfil</h2><p>Formulario de perfil aquí...</p></div>;
+  return <EditarPerfil2 />;
+  
 }
 
 function Dashboard() {
