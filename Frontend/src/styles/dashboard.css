@@ -1,22 +1,147 @@
-/* src/styles/mi_estilo.css */
+/* =========================
+   DASHBOARD CLINICA
+========================= */
 
-/* Cambiar color del sidebar */
+/* ===== SIDEBAR ===== */
+
 .main-sidebar {
-  background-color: #1a1a2e !important;
+  background: #5a0f1c !important;
+  border-right: 2px solid #d4af37;
 }
 
-/* Cambiar color de los links del menú */
+/* Logo superior */
+.brand-link {
+  background: #4a0c17 !important;
+  border-bottom: 1px solid #d4af37 !important;
+}
+
+.brand-text {
+  color: white !important;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 1.3rem;
+}
+
+/* ===== LINKS MENU ===== */
+
 .nav-sidebar .nav-link {
-  color: #a0aec0 !important;
+  color: #f5f5f5 !important;
+  border-radius: 10px;
+  margin: 5px 8px;
+  width: calc(100% - 16px);
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
-/* Cambiar color del link activo */
+/* Hover */
+.nav-sidebar .nav-link:hover {
+  background: rgba(212, 175, 55, 0.15) !important;
+  color: #d4af37 !important;
+}
+
+/* Activo */
 .nav-sidebar .nav-link.active {
-  background-color: #e53e3e !important;
+  background: #d4af37 !important;
+  color: #5a0f1c !important;
+  font-weight: bold;
 }
 
-/* Cambiar color de la barra superior */
-.main-header {
-  background-color: #ffffff !important;
-  border-bottom: 2px solid #e53e3e;
+/* Iconos */
+.nav-icon {
+  color: inherit !important;
+}
+
+/* ===== SIDEBAR FLEX ===== */
+
+.nav-sidebar {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 80px);
+  overflow: hidden !important;
+}
+
+/* Botón cerrar sesión abajo */
+.nav-sidebar .nav-item:last-child {
+  margin-top: auto;
+  margin-bottom: 15px;
+}
+
+/* ===== CONTENIDO ===== */
+
+.content-wrapper {
+  background: #f4f4f4 !important;
+  min-height: 100vh !important;
+}
+
+/* Header del contenido */
+.content-header h1 {
+  color: #5a0f1c;
+  font-weight: bold;
+}
+
+/* Centrado del contenido */
+.dashboard-content {
+  width: 100%;
+  min-height: 80vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding-top: 30px;
+}
+
+/* ===== FOOTER ===== */
+
+.main-footer {
+  display: none !important;
+}
+
+/* ===== GENERAL ===== */
+
+.wrapper {
+  overflow-x: hidden;
+}
+
+html,
+body {
+  overflow-x: hidden !important;
+}
+
+.wrapper {
+  overflow-x: hidden !important;
+}
+
+.content-wrapper {
+  overflow-x: hidden !important;
+}
+
+.container-fluid {
+  overflow-x: hidden !important;
+}
+
+/* Quitar scrollbar del sidebar */
+.sidebar {
+  overflow: hidden !important;
+}
+
+.os-content {
+  overflow: hidden !important;
+}
+
+.os-viewport {
+  overflow: hidden !important;
+}
+
+.main-sidebar {
+  width: 250px !important;
+  overflow-x: hidden !important;
+}
+
+.sidebar {
+  overflow-x: hidden !important;
+}
+
+.nav-sidebar {
+  overflow-x: hidden !important;
 }

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import "../../styles/dashboard.css";
+import CrearCita from "../paciente/CrearCitas";
 
 function CrearCitas() {
-  return <div><h2>Crear Citas</h2><p>Formulario de citas aquí...</p></div>;
+  return <CrearCita />;
 }
 
 function VerCitas() {
@@ -18,10 +19,10 @@ function Dashboard() {
 
   const renderContenido = () => {
     switch (seccionActiva) {
-      case "crear-citas":   return <CrearCitas />;
-      case "ver-citas":     return <VerCitas />;
+      case "crear-citas": return <CrearCitas />;
+      case "ver-citas": return <VerCitas />;
       case "editar-perfil": return <EditarPerfil />;
-      default:              return <CrearCitas />;
+      default: return <CrearCitas />;
     }
   };
 
@@ -48,7 +49,7 @@ function Dashboard() {
               </li>
 
               <li className="nav-item">
-                <a  
+                <a
                   href="#"
                   className={"nav-link " + (seccionActiva === "ver-citas" ? "active" : "")}
                   onClick={() => setSeccionActiva("ver-citas")}
@@ -59,7 +60,7 @@ function Dashboard() {
               </li>
 
               <li className="nav-item">
-                <a  
+                <a
                   href="#"
                   className={"nav-link " + (seccionActiva === "editar-perfil" ? "active" : "")}
                   onClick={() => setSeccionActiva("editar-perfil")}
@@ -69,10 +70,21 @@ function Dashboard() {
                 </a>
               </li>
 
+              <li className="nav-item">
+                <a
+                  href="#"
+                  className={"nav-link " + (seccionActiva === "cerrar-sesion" ? "active" : "")}
+                  onClick={() => setSeccionActiva("cerrar-sesion")}
+                >
+                  <i className="nav-icon fas fa-sign-out-alt"></i>
+                  <p>Cerrar Sesion</p>
+                </a>
+              </li>
+
             </ul>
           </nav>
         </div>
-      </aside>
+      </aside >
 
       <div className="content-wrapper">
         <div className="content-header">
@@ -86,11 +98,13 @@ function Dashboard() {
         </div>
         <div className="content">
           <div className="container-fluid">
-            {renderContenido()}
+            <div className="dashboard-content">
+              {renderContenido()}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
