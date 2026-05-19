@@ -113,8 +113,43 @@ function existePacienteDuplicado(
     });
 }
 
+function obtenerCitasPorEmail(email) {
+
+    return new Promise((resolve, reject) => {
+
+        const sql = `
+        SELECT 
+            c.Id_Citas,
+            c.Fecha,
+            c.Hora,
+            c.Especialidad_Nombre
+        FROM citas c
+        INNER JOIN pacientes p
+            ON c.Pacientes_Id_Pacientes = p.Id_Pacientes
+        WHERE p.Email = ?
+        `;
+
+        db.query(sql, [email], (err, result) => {
+
+            if (err) {
+
+                reject(err);
+
+            } else {
+
+                resolve(result);
+
+            }
+
+        });
+
+    });
+
+}
+
 // Exportamos funciones
 module.exports = {
     agregarPaciente,
-    existePacienteDuplicado
+    existePacienteDuplicado,
+    obtenerCitasPorEmail
 };

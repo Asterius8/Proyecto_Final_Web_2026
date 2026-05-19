@@ -1,0 +1,232 @@
+.ver-citas-container {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* HEADER */
+
+.header-citas {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+
+  text-align: center;
+}
+
+.header-citas h1 {
+  color: #5a0f1c;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.header-citas p {
+  color: #777;
+}
+
+/* CARD */
+
+.citas-card {
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 15px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* TABLA */
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.citas-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.citas-table th {
+  background: #5a0f1c;
+
+  color: white;
+
+  padding: 15px;
+
+  text-align: left;
+}
+
+.citas-table td {
+  padding: 15px;
+
+  border-bottom: 1px solid #eee;
+}
+
+.citas-table tr:hover {
+  background: #fafafa;
+}
+
+/* BOTONES */
+
+.btn-detalles {
+  background: #d4af37;
+
+  border: none;
+
+  color: white;
+
+  padding: 10px 15px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  transition: 0.3s;
+}
+
+.btn-detalles:hover {
+  background: #b8941f;
+}
+
+/* MODAL */
+
+.modal-overlay {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+.modal-content-cita {
+  background: white;
+
+  width: 90%;
+  max-width: 500px;
+
+  border-radius: 15px;
+
+  padding: 25px;
+}
+
+.modal-header-cita {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.modal-header-cita h3 {
+  color: #5a0f1c;
+}
+
+.cerrar-modal {
+  border: none;
+  background: none;
+
+  font-size: 28px;
+
+  cursor: pointer;
+}
+
+.info-group {
+  margin-bottom: 20px;
+}
+
+.info-group label {
+  font-weight: bold;
+
+  color: #5a0f1c;
+
+  display: block;
+
+  margin-bottom: 5px;
+}
+
+.info-group p {
+  background: #f5f5f5;
+
+  padding: 12px;
+
+  border-radius: 8px;
+}
+
+.modal-footer-cita {
+  display: flex;
+
+  justify-content: flex-end;
+}
+
+.btn-cerrar {
+  background: #5a0f1c;
+
+  color: white;
+
+  border: none;
+
+  padding: 10px 18px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.btn-cerrar:hover {
+  background: #3f0a14;
+}
+
+/* DATATABLE */
+
+.dataTables_wrapper {
+  margin-top: 20px;
+}
+
+.dataTables_filter input {
+  border: 1px solid #ccc !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+}
+
+.dataTables_length select {
+  border-radius: 8px !important;
+  padding: 5px !important;
+}
+
+.dataTables_paginate .paginate_button.current {
+  background: #5a0f1c !important;
+  color: white !important;
+  border-radius: 8px !important;
+  border: none !important;
+}
+
+.dataTables_paginate .paginate_button:hover {
+  background: #d4af37 !important;
+  color: white !important;
+}
+
+table.dataTable thead {
+  background: #5a0f1c;
+  color: white;
+}

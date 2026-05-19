@@ -3,7 +3,8 @@
 // Importamos funciones del modelo
 const {
     agregarPaciente,
-    existePacienteDuplicado
+    existePacienteDuplicado,
+    obtenerCitasPorEmail
 } = require("../models/PacienteModelo");
 
 // Importamos conexión
@@ -175,4 +176,52 @@ exports.create = async function (req, res) {
             errores: ["Error interno del servidor"]
         });
     }
+};
+
+exports.obtenerCitasPaciente = async function (req, res) {
+
+    try {
+
+        // ================= RECIBIR EMAIL =================
+        const { email } = req.body;
+
+        if (!email) {
+
+            return res.json({
+                ok: false,
+                errores: ["Email requerido"]
+            });
+
+        }
+
+        // ================= CONSULTAR CITAS =================
+        const citas = await obtenerCitasPorEmail(email);
+
+        // ================= VALIDAR =================
+        if (citas.length === 0) {
+
+            return res.json({
+                ok: false,
+                errores: ["No hay citas registradas"]
+            });
+
+        }
+
+        // ================= RESPUESTA =================
+        res.json({
+            ok: true,
+            citas
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.json({
+            ok: false,
+            errores: ["Error del servidor"]
+        });
+
+    }
+
 };

@@ -2,13 +2,14 @@ import { useState } from "react";
 import "../../styles/dashboard.css";
 import CrearCita from "../paciente/CrearCitas";
 import EditarPerfil2 from "../paciente/EditarPaciente";
+import VerCitas2 from "../paciente/VerCitas";
 
 function CrearCitas() {
   return <CrearCita />;
 }
 
 function VerCitas() {
-  return <div><h2>Editar Perfil</h2><p>Formulario de perfil aquí...</p></div>;
+  return <VerCitas2 />;
 }
 
 function EditarPerfil() {
@@ -22,8 +23,8 @@ function Dashboard() {
   const renderContenido = () => {
     switch (seccionActiva) {
       case "crear-citas": return <CrearCitas />;
-      case "ver-citas": return <VerCitas />;
-      case "editar-perfil": return <EditarPerfil />;
+      case "ver-citas": return <VerCitas2 />;
+      case "editar-perfil": return <EditarPerfil2 />;
       default: return <CrearCitas />;
     }
   };
