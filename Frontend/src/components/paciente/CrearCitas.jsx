@@ -67,26 +67,81 @@ function CrearCitas() {
         });
     };
 
-    // ================= VALIDAR =================
+const validar = () => {
 
-    const validar = () => {
+    let errores = [];
 
-        let errores = [];
+    // ================= FECHA =================
 
-        if (!form.fecha) {
-            errores.push("La fecha es obligatoria");
+    if (!form.fecha) {
+
+        errores.push("La fecha es obligatoria");
+
+    } else {
+
+        // Fecha actual
+        const hoy = new Date();
+
+        // Quitar horas para comparar solo fecha
+        hoy.setHours(0, 0, 0, 0);
+
+        // Fecha seleccionada
+        const fechaSeleccionada = new Date(form.fecha);
+
+        if (fechaSeleccionada < hoy) {
+
+            errores.push(
+                "La fecha debe ser posterior o igual a hoy"
+            );
+
         }
 
-        if (!form.hora) {
-            errores.push("La hora es obligatoria");
+    }
+
+    // ================= HORA =================
+
+    if (!form.hora) {
+
+        errores.push("La hora es obligatoria");
+
+    } else {
+
+        // Convertir hora a número
+        const [horas, minutos] = form.hora.split(":");
+
+        const horaNumerica =
+            parseInt(horas) * 60 + parseInt(minutos);
+
+        // 08:00
+        const horaMinima = 8 * 60;
+
+        // 18:00
+        const horaMaxima = 18 * 60;
+
+        if (
+            horaNumerica < horaMinima ||
+            horaNumerica > horaMaxima
+        ) {
+
+            errores.push(
+                "La hora debe estar entre 08:00 y 18:00"
+            );
+
         }
 
-        if (!form.medico) {
-            errores.push("Debe seleccionar un médico");
-        }
+    }
 
-        return errores;
-    };
+    // ================= MÉDICO =================
+
+    if (!form.medico) {
+
+        errores.push("Debe seleccionar un médico");
+
+    }
+
+    return errores;
+
+};
 
     // ================= ENVIAR FORMULARIO =================
 

@@ -41,7 +41,7 @@ function VerCitas() {
 
                 // Fetch al backend
                 const res = await fetch(
-                    "http://localhost:3000/api/citas",
+                    "http://localhost:3000/api/citas/paciente",
                     {
                         method: "POST",
                         headers: {
@@ -54,7 +54,7 @@ function VerCitas() {
                 );
 
                 const data = await res.json();
-
+                console.log("📦 Respuesta del backend:", data); // <-- agregar
                 // Si sale bien
                 if (data.ok) {
 

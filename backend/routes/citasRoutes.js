@@ -5,10 +5,20 @@ const express = require("express");
 const router = express.Router();
 
 // Importamos controller
-const citasController = require("../controllers/pacienteController");
+const citasController =
+    require("../controllers/CitasController");
 
-// Ruta POST
-router.post("/", citasController.obtenerCitasPaciente);
+// ================= OBTENER CITAS =================
+router.post(
+    "/paciente",
+    citasController.obtenerCitasPaciente
+);
+
+// ================= CREAR CITA =================
+router.post(
+    "/",
+    citasController.crearCita
+);
 
 // Exportamos
 module.exports = router;
