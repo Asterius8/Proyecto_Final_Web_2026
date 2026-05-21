@@ -125,14 +125,29 @@ function obtenerCitasPorPaciente(idPaciente) {
     return new Promise((resolve, reject) => {
 
         const sql = `
-    SELECT 
-        c.Fecha,
-        c.Hora,
-        c.Especialidad_Nombre
-    FROM citas c
-    WHERE c.Pacientes_Id_Pacientes = ?
-    ORDER BY c.Fecha ASC, c.Hora ASC
-`;
+        SELECT 
+            c.Fecha,
+            c.Hora,
+
+            m.Especialidad AS Especialidad,
+
+            CONCAT(
+                m.Nombre,
+                ' ',
+                m.Apellido_Paterno,
+                ' ',
+                m.Apellido_Materno
+            ) AS Medico_Nombre
+
+        FROM citas c
+
+        INNER JOIN medicos m
+        ON c.Medicos_Id_Medicos = m.Id_Medicos
+
+        WHERE c.Pacientes_Id_Pacientes = ?
+
+        ORDER BY c.Fecha ASC, c.Hora ASC
+        `;
 
         db.query(sql, [idPaciente], (err, result) => {
 

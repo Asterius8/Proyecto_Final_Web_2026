@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Swal from "sweetalert2";
 
 import $ from "jquery";
@@ -16,6 +16,8 @@ function VerCitas() {
     const [citaSeleccionada, setCitaSeleccionada] = useState(null);
 
     const [mostrarModal, setMostrarModal] = useState(false);
+
+    const tablaRef = useRef(null);
 
     // ================= CARGAR CITAS =================
     useEffect(() => {
@@ -92,32 +94,48 @@ function VerCitas() {
     // ================= ACTIVAR DATATABLE =================
     useEffect(() => {
 
-        if (citas.length > 0) {
+        if (citas.length === 0) return;
 
-            // Destruir si ya existe
-            if ($.fn.DataTable.isDataTable("#tablaCitas")) {
+        let tabla;
 
-                $("#tablaCitas").DataTable().destroy();
+        if ($.fn.DataTable.isDataTable(tablaRef.current)) {
+
+            $(tablaRef.current)
+                .DataTable()
+                .destroy();
+
+        }
+
+        tabla = $(tablaRef.current).DataTable({
+
+            language: {
+                search: "Buscar:",
+                lengthMenu:
+                    "Mostrar _MENU_ registros",
+
+                info:
+                    "Mostrando _START_ a _END_ de _TOTAL_ citas",
+
+                paginate: {
+                    next: "Siguiente",
+                    previous: "Anterior"
+                },
+
+                emptyTable:
+                    "No hay citas registradas"
+            }
+
+        });
+
+        return () => {
+
+            if (tabla) {
+
+                tabla.destroy();
 
             }
 
-            // Crear DataTable
-            $("#tablaCitas").DataTable({
-
-                language: {
-                    search: "Buscar:",
-                    lengthMenu: "Mostrar _MENU_ registros",
-                    info: "Mostrando _START_ a _END_ de _TOTAL_ citas",
-                    paginate: {
-                        next: "Siguiente",
-                        previous: "Anterior"
-                    },
-                    emptyTable: "No hay citas registradas"
-                }
-
-            });
-
-        }
+        };
 
     }, [citas]);
 
@@ -131,6 +149,8 @@ function VerCitas() {
     };
 
     // ================= RENDER =================
+    console.log("Modal:", mostrarModal);
+    console.log("Seleccionada:", citaSeleccionada);
     return (
 
         <div className="ver-citas-container">
@@ -150,6 +170,7 @@ function VerCitas() {
             <div className="citas-container">
 
                 <table
+                    ref={tablaRef}
                     id="tablaCitas"
                     className="display citas-table"
                 >
@@ -176,22 +197,30 @@ function VerCitas() {
 
                             <tr key={index}>
 
-                                <td>{cita.Fecha}</td>
+                                <td>{cita.Fecha.split("T")[0]}</td>
 
                                 <td>{cita.Hora}</td>
 
-                                <td>{cita.Especialidad_Nombre}</td>
+                                <td>{cita.Medico_Nombre}</td>
 
                                 <td>
 
                                     <button
-                                        className="btn btn-primary"
-                                        onClick={() => verDetalles(cita)}
+                                        className="btn-detalles"
+                                        onClick={() => {
+
+                                            console.log(cita);
+
+                                            setCitaSeleccionada(cita);
+
+                                            setMostrarModal(true);
+
+                                        }}
                                     >
 
-                                        <i className="fas fa-eye"></i>
+                                        <i className="fas fa-eye"> </i>
 
-                                        Ver Detalles
+                                         Ver Detalles
 
                                     </button>
 
@@ -210,16 +239,16 @@ function VerCitas() {
             {/* MODAL */}
             {mostrarModal && citaSeleccionada && (
 
-                <div className="modal">
+                <div className="modal-overlay">
 
-                    <div className="modal-content">
+                    <div className="modal-content-cita">
 
-                        <div className="modal-header">
+                        <div className="modal-header-cita">
 
                             <h3>Detalles de la Cita</h3>
 
                             <button
-                                className="close-modal"
+                                className="cerrar-modal"
                                 onClick={() => setMostrarModal(false)}
                             >
                                 ×
@@ -230,35 +259,31 @@ function VerCitas() {
                         <div className="modal-body">
 
                             <div className="info-group">
-
                                 <label>Fecha:</label>
-
-                                <p>{citaSeleccionada.Fecha}</p>
-
+                                <p>{citaSeleccionada.Fecha.split("T")[0]}</p>
                             </div>
 
                             <div className="info-group">
-
                                 <label>Hora:</label>
-
                                 <p>{citaSeleccionada.Hora}</p>
-
                             </div>
 
                             <div className="info-group">
+                                <label>Especialidad:</label>
+                                <p>{citaSeleccionada.Especialidad}</p>
+                            </div>
 
+                            <div className="info-group">
                                 <label>Médico:</label>
-
-                                <p>{citaSeleccionada.Especialidad_Nombre}</p>
-
+                                <p>{citaSeleccionada.Medico_Nombre}</p>
                             </div>
 
                         </div>
 
-                        <div className="modal-actions">
+                        <div className="modal-footer-cita">
 
                             <button
-                                className="btn btn-outline"
+                                className="btn-cerrar"
                                 onClick={() => setMostrarModal(false)}
                             >
                                 Cerrar
