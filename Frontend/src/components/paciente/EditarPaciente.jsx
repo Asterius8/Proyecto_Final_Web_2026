@@ -21,11 +21,8 @@ function EditarPerfil() {
   // ================= CARGAR DATOS DEL PACIENTE =================
   useEffect(() => {
 
-    // Obtener usuario guardado
-    const user = JSON.parse(localStorage.getItem("user"));
-
     // Obtener email
-    const email = user?.email;
+    const email = localStorage.getItem("email");
 
     // Si no existe email
     if (!email) {
@@ -54,7 +51,9 @@ function EditarPerfil() {
             nombre: data.paciente.Nombre,
             primer_apellido: data.paciente.Apellido_Paterno,
             segundo_apellido: data.paciente.Apellido_Materno,
-            fecha_nac: data.paciente.Fecha_Nac,
+            fecha_nac:
+              data.paciente.Fecha_Nac
+                ?.split("T")[0],
             sexo: data.paciente.Sexo,
             telefono: data.paciente.Telefono,
             tipo_seguro: data.paciente.Tipo_Seguro,
@@ -148,25 +147,28 @@ function EditarPerfil() {
 
     try {
 
-      // Obtener usuario
-      const user = JSON.parse(localStorage.getItem("user"));
-
-      // Obtener email
-      const email = user?.email;
+      const email = localStorage.getItem("email");
 
       // Fetch al backend
       const res = await fetch(
+
         "http://localhost:3000/api/paciente/editar",
+
         {
+
           method: "PUT",
+
           headers: {
-            "Content-Type": "application/json"
+
+            "Content-Type":
+              "application/json"
+
           },
-          body: JSON.stringify({
-            ...form,
-            email
-          })
+
+          body: JSON.stringify({ ...form, email })
+
         }
+
       );
 
       const data = await res.json();
@@ -178,6 +180,10 @@ function EditarPerfil() {
           title: "Paciente editado",
           text: "Información actualizada correctamente",
           icon: "success"
+        }).then(() => {
+
+          window.location.reload();
+
         });
 
       }

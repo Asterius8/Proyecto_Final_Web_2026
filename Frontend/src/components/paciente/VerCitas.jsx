@@ -56,7 +56,6 @@ function VerCitas() {
                 );
 
                 const data = await res.json();
-                console.log("📦 Respuesta del backend:", data); // <-- agregar
                 // Si sale bien
                 if (data.ok) {
 
@@ -149,8 +148,6 @@ function VerCitas() {
     };
 
     // ================= RENDER =================
-    console.log("Modal:", mostrarModal);
-    console.log("Seleccionada:", citaSeleccionada);
     return (
 
         <div className="ver-citas-container">
@@ -208,8 +205,6 @@ function VerCitas() {
                                     <button
                                         className="btn-detalles"
                                         onClick={() => {
-
-                                            console.log(cita);
 
                                             setCitaSeleccionada(cita);
 

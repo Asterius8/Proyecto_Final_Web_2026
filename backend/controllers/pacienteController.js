@@ -4,7 +4,9 @@
 const {
     agregarPaciente,
     existePacienteDuplicado,
-    obtenerCitasPorEmail
+    obtenerCitasPorEmail,
+    obtenerPacientePorEmail,
+    editarPaciente
 } = require("../models/PacienteModelo");
 
 // Importamos conexión
@@ -225,3 +227,151 @@ exports.obtenerCitasPaciente = async function (req, res) {
     }
 
 };
+
+exports.obtenerPaciente = async (req, res) => {
+
+    try {
+
+        const email = req.params.email;
+
+        const paciente =
+            await obtenerPacientePorEmail(email);
+
+        if (!paciente) {
+
+            return res.json({
+                ok: false
+            });
+
+        }
+
+        res.json({
+            ok: true,
+            paciente
+        });
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+
+    }
+
+};
+
+exports.editarPaciente =
+    async (req, res) => {
+
+        try {
+
+            const {
+                tipo_seguro,
+                contacto_emergencia,
+                telefono_emergencia,
+                email
+            }
+                =
+                req.body;
+
+            let errores = [];
+
+            const regexTexto =
+                /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/;
+
+            const regexTelefono =
+                /^[0-9]{10}$/;
+
+            if (!tipo_seguro) {
+
+                errores.push(
+                    "Selecciona un tipo de seguro"
+                );
+
+            }
+
+            if (
+                !contacto_emergencia
+            ) {
+
+                errores.push(
+                    "Contacto obligatorio"
+                );
+
+            }
+
+            else if (
+                !regexTexto.test(
+                    contacto_emergencia
+                )
+            ) {
+
+                errores.push(
+                    "Solo letras"
+                );
+
+            }
+
+            if (
+                !regexTelefono.test(
+                    telefono_emergencia
+                )
+            ) {
+
+                errores.push(
+                    "Teléfono inválido"
+                );
+
+            }
+
+            if (
+                errores.length > 0
+            ) {
+
+                return res.json({
+
+                    ok: false,
+                    errores
+
+                });
+
+            }
+
+            await editarPaciente(
+
+                tipo_seguro,
+                contacto_emergencia,
+                telefono_emergencia,
+                email
+
+            );
+
+            res.json({
+
+                ok: true
+
+            });
+
+        }
+
+        catch (error) {
+
+            console.log(error);
+
+            res.status(500).json({
+
+                ok: false,
+                errores: [
+                    "Error interno"
+                ]
+
+            });
+
+        }
+
+    };

@@ -147,9 +147,108 @@ function obtenerCitasPorEmail(email) {
 
 }
 
+function obtenerPacientePorEmail(email) {
+
+    return new Promise((resolve, reject) => {
+
+        const sql = `
+        SELECT
+            Nombre,
+            Apellido_Paterno,
+            Apellido_Materno,
+            Fecha_Nac,
+            Sexo,
+            Telefono,
+            Tipo_Seguro,
+            Contacto_Emergencia_Nombre,
+            Contacto_Emergencia_Telefono
+        FROM pacientes
+        WHERE Email = ?
+        LIMIT 1
+        `;
+
+        db.query(
+            sql,
+            [email],
+            (err, result) => {
+
+                if (err) {
+
+                    reject(err);
+
+                }
+
+                else {
+
+                    resolve(
+                        result.length > 0
+                            ? result[0]
+                            : null
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+}
+
+function editarPaciente(
+    tipo_seguro,
+    contacto_emergencia,
+    telefono_emergencia,
+    email
+) {
+
+    return new Promise((resolve, reject) => {
+
+        const sql = `
+        UPDATE pacientes
+        SET
+            Tipo_Seguro = ?,
+            Contacto_Emergencia_Nombre = ?,
+            Contacto_Emergencia_Telefono = ?
+        WHERE Email = ?
+        `;
+
+        db.query(
+            sql,
+            [
+                tipo_seguro,
+                contacto_emergencia,
+                telefono_emergencia,
+                email
+            ],
+
+            (err, result) => {
+
+                if (err) {
+
+                    reject(err);
+
+                }
+
+                else {
+
+                    resolve(result);
+
+                }
+
+            }
+
+        );
+
+    });
+
+}
+
 // Exportamos funciones
 module.exports = {
     agregarPaciente,
     existePacienteDuplicado,
-    obtenerCitasPorEmail
+    obtenerCitasPorEmail,
+    obtenerPacientePorEmail,
+    editarPaciente
 };
