@@ -1,14 +1,14 @@
 const mysql = require("mysql2");
 
-const db = mysql.createConnection({
-  host: "localhost",
-  port: 3307,
-  user: "oscar",
-  password: "oscar",
-  database: "bd_clinica_2025"
+const db2 = mysql.createConnection({
+    host: process.env.MYSQL2_HOST,
+    user: process.env.MYSQL2_USER,
+    password: process.env.MYSQL2_PASSWORD,
+    database: process.env.MYSQL2_DATABASE,
+    port: process.env.MYSQL2_PORT
 });
 
-db.connect((err) => {
+db2.connect((err) => {
   if (err) {
     console.log("Error MySQL:", err);
   } else {
@@ -16,4 +16,4 @@ db.connect((err) => {
   }
 });
 
-module.exports = db;
+module.exports = db2;

@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.use("/api", authRoutes);
 
 app.use("/api/citas", citasRoutes);
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
     console.log("Servidor corriendo en puerto 3000");
 });
