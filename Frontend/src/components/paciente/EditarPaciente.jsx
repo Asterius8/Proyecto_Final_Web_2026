@@ -3,7 +3,13 @@ import Swal from "sweetalert2";
 
 import "../../styles/editar_paciente.css";
 
+import { useNavigate } from "react-router-dom";
+
+
+
 function EditarPerfil() {
+
+  const navigate = useNavigate();
 
   // ================= ESTADO DEL FORMULARIO =================
   const [form, setForm] = useState({
@@ -182,7 +188,7 @@ function EditarPerfil() {
           icon: "success"
         }).then(() => {
 
-          window.location.reload();
+          navigate("/dashboard");
 
         });
 

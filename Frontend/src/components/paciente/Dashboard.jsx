@@ -5,7 +5,12 @@ import CrearCita from "../paciente/CrearCitas";
 import EditarPerfil2 from "../paciente/EditarPaciente";
 import VerCitas2 from "../paciente/VerCitas";
 
+import { useNavigate } from "react-router-dom";
+
+
 function Dashboard() {
+
+  const navigate = useNavigate();
 
   // Recuperar sección guardada
   const [seccionActiva, setSeccionActiva] = useState(
@@ -69,8 +74,8 @@ function Dashboard() {
                 <a
                   href="#"
                   className={`nav-link ${seccionActiva === "crear-citas"
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={(e) => {
                     e.preventDefault();
@@ -87,8 +92,8 @@ function Dashboard() {
                 <a
                   href="#"
                   className={`nav-link ${seccionActiva === "ver-citas"
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={(e) => {
                     e.preventDefault();
@@ -105,8 +110,8 @@ function Dashboard() {
                 <a
                   href="#"
                   className={`nav-link ${seccionActiva === "editar-perfil"
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={(e) => {
                     e.preventDefault();
@@ -123,8 +128,8 @@ function Dashboard() {
                 <a
                   href="#"
                   className={`nav-link ${seccionActiva === "cerrar-sesion"
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={(e) => {
 
@@ -136,8 +141,7 @@ function Dashboard() {
                     localStorage.removeItem("seccionActiva");
 
                     // redirigir
-                    window.location.href = "/";
-
+                    navigate("/");
                   }}
                 >
 

@@ -3,7 +3,10 @@ import Swal from "sweetalert2";
 
 import "../../styles/crear_cita.css";
 
+import { useNavigate } from "react-router-dom";
+
 function CrearCitas() {
+    const navigate = useNavigate();
 
     // ================= STATES =================
 
@@ -67,81 +70,81 @@ function CrearCitas() {
         });
     };
 
-const validar = () => {
+    const validar = () => {
 
-    let errores = [];
+        let errores = [];
 
-    // ================= FECHA =================
+        // ================= FECHA =================
 
-    if (!form.fecha) {
+        if (!form.fecha) {
 
-        errores.push("La fecha es obligatoria");
+            errores.push("La fecha es obligatoria");
 
-    } else {
+        } else {
 
-        // Fecha actual
-        const hoy = new Date();
+            // Fecha actual
+            const hoy = new Date();
 
-        // Quitar horas para comparar solo fecha
-        hoy.setHours(0, 0, 0, 0);
+            // Quitar horas para comparar solo fecha
+            hoy.setHours(0, 0, 0, 0);
 
-        // Fecha seleccionada
-        const fechaSeleccionada = new Date(form.fecha);
+            // Fecha seleccionada
+            const fechaSeleccionada = new Date(form.fecha);
 
-        if (fechaSeleccionada < hoy) {
+            if (fechaSeleccionada < hoy) {
 
-            errores.push(
-                "La fecha debe ser posterior o igual a hoy"
-            );
+                errores.push(
+                    "La fecha debe ser posterior o igual a hoy"
+                );
 
-        }
-
-    }
-
-    // ================= HORA =================
-
-    if (!form.hora) {
-
-        errores.push("La hora es obligatoria");
-
-    } else {
-
-        // Convertir hora a número
-        const [horas, minutos] = form.hora.split(":");
-
-        const horaNumerica =
-            parseInt(horas) * 60 + parseInt(minutos);
-
-        // 08:00
-        const horaMinima = 8 * 60;
-
-        // 18:00
-        const horaMaxima = 18 * 60;
-
-        if (
-            horaNumerica < horaMinima ||
-            horaNumerica > horaMaxima
-        ) {
-
-            errores.push(
-                "La hora debe estar entre 08:00 y 18:00"
-            );
+            }
 
         }
 
-    }
+        // ================= HORA =================
 
-    // ================= MÉDICO =================
+        if (!form.hora) {
 
-    if (!form.medico) {
+            errores.push("La hora es obligatoria");
 
-        errores.push("Debe seleccionar un médico");
+        } else {
 
-    }
+            // Convertir hora a número
+            const [horas, minutos] = form.hora.split(":");
 
-    return errores;
+            const horaNumerica =
+                parseInt(horas) * 60 + parseInt(minutos);
 
-};
+            // 08:00
+            const horaMinima = 8 * 60;
+
+            // 18:00
+            const horaMaxima = 18 * 60;
+
+            if (
+                horaNumerica < horaMinima ||
+                horaNumerica > horaMaxima
+            ) {
+
+                errores.push(
+                    "La hora debe estar entre 08:00 y 18:00"
+                );
+
+            }
+
+        }
+
+        // ================= MÉDICO =================
+
+        if (!form.medico) {
+
+            errores.push("Debe seleccionar un médico");
+
+        }
+
+        return errores;
+
+    };
 
     // ================= ENVIAR FORMULARIO =================
 
@@ -316,9 +319,10 @@ const validar = () => {
                     <div className="form-actions">
 
                         <button
+
                             type="button"
                             className="btn btn-outline1"
-                            onClick={() => window.history.back()}
+                            onClick={() => navigate(-1)}
                         >
                             Cancelar
                         </button>
