@@ -45,7 +45,7 @@ function Ingresar() {
 
     try {
       // Envía el correo y la contraseña al servidor para ingresar a la cuenta
-      const res = await fetch("http://localhost:3000/api/login", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
         method: "POST", // Le dice al servidor que quiere enviar datos nuevos
         headers: {
           "Content-Type": "application/json", // Le avisa al servidor que los datos vienen en formato JSON

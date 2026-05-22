@@ -81,7 +81,7 @@ function PatientForm() {
     const email = localStorage.getItem("email");
 
     try {
-      const res = await fetch("http://localhost:3000/api/paciente", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/paciente`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

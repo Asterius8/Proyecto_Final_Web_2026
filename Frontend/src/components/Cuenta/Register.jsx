@@ -46,7 +46,7 @@ function Register() {
 
     try {
       // Envía el correo y la contraseña al servidor para crear la cuenta
-      const res = await fetch("http://localhost:3000/api/register", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
         method: "POST", // Le dice al servidor que quiere enviar datos nuevos
         headers: {
           "Content-Type": "application/json", // Le avisa al servidor que los datos vienen en formato JSON

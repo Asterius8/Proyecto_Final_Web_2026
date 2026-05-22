@@ -37,7 +37,7 @@ function EditarPerfil() {
     }
 
     // Fetch al backend
-    fetch(`http://localhost:3000/api/paciente/${email}`)
+    fetch(`${import.meta.env.VITE_API_URL}/paciente/${email}`)
 
       .then(res => res.json())
 
@@ -152,7 +152,7 @@ function EditarPerfil() {
       // Fetch al backend
       const res = await fetch(
 
-        "http://localhost:3000/api/paciente/editar",
+        `${import.meta.env.VITE_API_URL}/paciente/editar`,
 
         {
 

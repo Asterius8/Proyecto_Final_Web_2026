@@ -30,7 +30,7 @@ function CrearCitas() {
 
         try {
 
-            const res = await fetch("http://localhost:3000/api/medicos");
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/medicos`);
 
             const data = await res.json();
 
@@ -172,7 +172,7 @@ const validar = () => {
             // Obtener email guardado
             const email = localStorage.getItem("email");
 
-            const res = await fetch("http://localhost:3000/api/citas", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/citas`, {
 
                 method: "POST",
 
