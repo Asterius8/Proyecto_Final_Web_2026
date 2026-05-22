@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 // Conexión a la base de datos para poder guardar y consultar información
 const db = require("../config/db");
 // Importas el archivo UsuarioModel.js
-const Usuario = require("../models/UsuarioModel");
+const Usuario = require("../models/usuarioModel");
 
 // Función que se ejecuta cuando alguien intenta crear una cuenta nueva
 exports.register = async (req, res) => {
