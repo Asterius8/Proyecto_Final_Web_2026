@@ -188,7 +188,7 @@ function EditarPerfil() {
           icon: "success"
         }).then(() => {
 
-          navigate("/dashboard");
+          navigate("/paciente/dashboard");
 
         });
 
