@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/dashboard.css";
 
 // ── Importa tus componentes reales aquí cuando los tengas ──
-// import AgregarMedico from "./AgregarMedico";
+import AgregarMedico from "./AgregarMedico";
 // import AdministrarMedicos from "./AdministrarMedicos";
 // import EliminarCitas from "./EliminarCitas";
 
@@ -21,8 +21,7 @@ function AdminDashboard() {
   const renderContenido = () => {
     switch (seccionActiva) {
       case "agregar-medico":
-        // return <AgregarMedico />;
-        return <p>Aquí va el formulario para Agregar Médico</p>;
+        return <AgregarMedico />;
       case "administrar-medicos":
         // return <AdministrarMedicos />;
         return <p>Aquí va la tabla de Administrar Médicos</p>;
@@ -35,9 +34,9 @@ function AdminDashboard() {
   };
 
   const titulos = {
-    "agregar-medico":      "Agregar Médico",
+    "agregar-medico": "Agregar Médico",
     "administrar-medicos": "Administrar Médicos",
-    "eliminar-citas":      "Eliminar Citas",
+    "eliminar-citas": "Eliminar Citas",
   };
 
   return (
