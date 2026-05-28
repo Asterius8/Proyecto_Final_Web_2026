@@ -112,11 +112,11 @@ exports.login = async (req, res) => {
     }
 
     Usuario.existeCorreo(email, (err, existe) => {
-
+      console.log("1. existeCorreo - err:", err, "existe:", existe);
       if (existe) {
 
         Usuario.obtenerPassword(email, async (err, hashGuardado) => {
-
+          console.log("2. obtenerPassword - err:", err, "hash:", hashGuardado);
           // Error de base de datos
           if (err) return res.json({ ok: false, errores: ["Error en base de datos contraseña"] });
 
@@ -127,19 +127,21 @@ exports.login = async (req, res) => {
 
           // Compara la contraseña que escribió el usuario con el hash de la base de datos
           const passwordCorrecta = await bcrypt.compare(password, hashGuardado);
-
+          console.log("3. passwordCorrecta:", passwordCorrecta);
           if (!passwordCorrecta) {
             return res.json({ ok: false, errores: ["Credenciales incorrectas"] });
           }
 
           // Una vez que confirmaste que la contraseña es correcta, obtienes el rol
           Usuario.obtenerRol(email, (err, rol) => {
+            console.log("4. obtenerRol - err:", err, "rol:", rol);
             if (err) return res.json({ ok: false, errores: ["Error al obtener rol"] });
-
+            console.log("Rol obtenido:", JSON.stringify(rol));
             switch (rol) {
               case "Admin":
                 // Le dices al frontend a dónde mandar al usuario
-                res.json({ ok: true, redirigir: "/admin" });
+                console.log("Rol obtenido:", JSON.stringify(rol));
+                res.json({ ok: true, redirigir: "/admin", mensaje: "Admin" });
                 break;
 
               default:
@@ -147,7 +149,7 @@ exports.login = async (req, res) => {
                 Usuario.existePacientePorCorreo(email, (err, existePaciente) => {
                   if (err) {
                     console.log("Error existePaciente:", err);
-                    return res.json({ ok: false, errores: [err.message] }); 
+                    return res.json({ ok: false, errores: [err.message] });
                   }
 
                   if (existePaciente) {

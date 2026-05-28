@@ -55,40 +55,51 @@ function Ingresar() {
 
       // Convierte la respuesta del servidor a un objeto que podemos usar
       const data = await res.json();
+      console.log("data completa:", data);
 
       // Si el servidor dice que todo salió bien...
       if (data.ok) {
-        // Guarda el correo en el navegador para recordarlo después
         localStorage.setItem("email", email);
-        // Borra cualquier error que hubiera en pantalla
         setErrores([]);
 
-        // Muestra un popup de éxito y cuando el usuario lo cierra, lo manda a otra página
         if (data.mensaje === "Login exitoso") {
           Swal.fire({
             title: "Sesión iniciada",
             text: "Bienvenido",
             icon: "success",
           }).then(() => {
+            setEmail("");        // 👈 movido aquí
+            setPassword("");     // 👈 movido aquí
             navigate(data.redirigir);
           });
 
-          // Si le falta completar sus datos personales
         } else if (data.mensaje === "Incompleto") {
           Swal.fire({
             title: "Cuenta incompleta",
             text: "Por favor, completa tus datos personales",
             icon: "warning",
           }).then(() => {
+            setEmail("");
+            setPassword("");
             navigate(data.redirigir);
           });
+
+        } else if (data.mensaje === "Admin") {
+          Swal.fire({
+            title: "Bienvenido, Admin",
+            text: "Accediendo al panel de administración",
+            icon: "success",
+          }).then(() => {
+            setEmail("");
+            setPassword("");
+            navigate(data.redirigir);
+          });
+
         } else {
+          setEmail("");
+          setPassword("");
           navigate(data.redirigir);
         }
-
-        // Limpia los campos de correo y contraseña
-        setEmail("");
-        setPassword("");
       } else {
         // Si el servidor encontró un error, lo muestra en pantalla
         setErrores(data.errores || ["Error desconocido"]);
