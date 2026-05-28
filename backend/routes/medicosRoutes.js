@@ -9,6 +9,6 @@ const medicosController = require("../controllers/medicosController");
 router.get("/", medicosController.obtenerMedicos);
 
 // Crear médico
-router.post("/", medicoController.create);
+router.post("/", medicosController.create);
 
 module.exports = router;
