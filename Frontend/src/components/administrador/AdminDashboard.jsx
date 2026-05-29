@@ -4,7 +4,7 @@ import "../../styles/dashboard.css";
 
 // ── Importa tus componentes reales aquí cuando los tengas ──
 import AgregarMedico from "./AgregarMedico";
-// import AdministrarMedicos from "./AdministrarMedicos";
+import AdministrarMedicos from "./AdministrarMedicos";
 // import EliminarCitas from "./EliminarCitas";
 
 function AdminDashboard() {
@@ -23,8 +23,7 @@ function AdminDashboard() {
       case "agregar-medico":
         return <AgregarMedico />;
       case "administrar-medicos":
-        // return <AdministrarMedicos />;
-        return <p>Aquí va la tabla de Administrar Médicos</p>;
+        return <AdministrarMedicos />;
       case "eliminar-citas":
         // return <EliminarCitas />;
         return <p>Aquí va la tabla de Eliminar Citas</p>;
