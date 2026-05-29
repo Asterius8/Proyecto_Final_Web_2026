@@ -1,15 +1,38 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
+import { sesionExpirada, cerrarSesion } from "../../utils/session";
 
 import "../../styles/agregar_medico.css";
 
 function AgregarMedico() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     nombre: "",
     apellido_paterno: "",
     apellido_materno: "",
     especialidad: "",
   });
+
+  const validarSesion = () => {
+    if (sesionExpirada()) {
+      cerrarSesion();
+
+      Swal.fire(
+        "Sesión expirada",
+        "Vuelve a iniciar sesión",
+        "warning"
+      ).then(() => {
+        navigate("/login");
+      });
+
+      return false;
+    }
+
+    return true;
+  };
 
   const handleChange = (e) => {
     setForm({
@@ -76,6 +99,8 @@ function AgregarMedico() {
 
       return;
     }
+
+    if (!validarSesion()) return;
 
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/medicos`, {
