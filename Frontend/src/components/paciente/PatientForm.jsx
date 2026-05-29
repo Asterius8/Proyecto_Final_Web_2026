@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
+import { sesionExpirada, cerrarSesion } from "../../utils/session";
+
 import "../../styles/form_paciente.css";
 
 function PatientForm() {
@@ -18,6 +20,24 @@ function PatientForm() {
     contacto_emergencia: "",
     telefono_emergencia: "",
   });
+
+  const validarSesion = () => {
+    if (sesionExpirada()) {
+      cerrarSesion();
+
+      Swal.fire(
+        "Sesión expirada",
+        "Vuelve a iniciar sesión",
+        "warning"
+      ).then(() => {
+        navigate("/login");
+      });
+
+      return false;
+    }
+
+    return true;
+  };
 
   const handleChange = (e) => {
     setForm({
@@ -75,8 +95,11 @@ function PatientForm() {
         html: `<ul style="text-align:left;">${errores.map((e) => `<li>${e}</li>`).join("")}</ul>`,
         icon: "error",
       });
+
       return;
     }
+
+    if (!validarSesion()) return;
 
     const email = localStorage.getItem("email");
 
@@ -97,7 +120,7 @@ function PatientForm() {
           text: "Datos guardados correctamente",
           icon: "success",
         }).then(() => {
-          navigate("/"); // o dashboard después
+          navigate("/paciente/dashboard");
         });
       } else {
         Swal.fire({
@@ -107,96 +130,105 @@ function PatientForm() {
         });
       }
     } catch (error) {
-      console.error(error); // 👈 abre la consola del navegador (F12)
-      Swal.fire("Error", error.message, "error"); // muestra el error real
+      console.error(error);
+      Swal.fire("Error", error.message, "error");
     }
   };
 
   return (
     <div className="paciente-page">
-    <div className="container2">
-      <form className="form-card2" onSubmit={handleSubmit}>
-        <h2>Datos Personales</h2>
-        <p className="subtitle">Completa tu información personal</p>
+      <div className="container2">
+        <form className="form-card2" onSubmit={handleSubmit}>
+          <h2>Datos Personales</h2>
+          <p className="subtitle">Completa tu información personal</p>
 
-        <input name="nombre" placeholder="Nombre" onChange={handleChange} />
-        <input
-          name="primer_apellido"
-          placeholder="Primer Apellido"
-          onChange={handleChange}
-        />
-        <input
-          name="segundo_apellido"
-          placeholder="Segundo Apellido"
-          onChange={handleChange}
-        />
+          <input name="nombre" placeholder="Nombre" onChange={handleChange} />
 
-        <input type="date" name="fecha_nac" onChange={handleChange} />
+          <input
+            name="primer_apellido"
+            placeholder="Primer Apellido"
+            onChange={handleChange}
+          />
 
-        <div className="form-group">
-          <label>Sexo</label>
-          <div className="radio-group">
-            <div className="radio-option">
-              <input
-                type="radio"
-                id="sexo-m"
-                name="sexo"
-                value="M"
-                onChange={handleChange}
-              />
-              <label htmlFor="sexo-m">Masculino</label>
-            </div>
-            <div className="radio-option">
-              <input
-                type="radio"
-                id="sexo-f"
-                name="sexo"
-                value="F"
-                onChange={handleChange}
-              />
-              <label htmlFor="sexo-f">Femenino</label>
-            </div>
-            <div className="radio-option">
-              <input
-                type="radio"
-                id="sexo-o"
-                name="sexo"
-                value="O"
-                onChange={handleChange}
-              />
-              <label htmlFor="sexo-o">Otros</label>
+          <input
+            name="segundo_apellido"
+            placeholder="Segundo Apellido"
+            onChange={handleChange}
+          />
+
+          <input type="date" name="fecha_nac" onChange={handleChange} />
+
+          <div className="form-group">
+            <label>Sexo</label>
+
+            <div className="radio-group">
+              <div className="radio-option">
+                <input
+                  type="radio"
+                  id="sexo-m"
+                  name="sexo"
+                  value="M"
+                  onChange={handleChange}
+                />
+                <label htmlFor="sexo-m">Masculino</label>
+              </div>
+
+              <div className="radio-option">
+                <input
+                  type="radio"
+                  id="sexo-f"
+                  name="sexo"
+                  value="F"
+                  onChange={handleChange}
+                />
+                <label htmlFor="sexo-f">Femenino</label>
+              </div>
+
+              <div className="radio-option">
+                <input
+                  type="radio"
+                  id="sexo-o"
+                  name="sexo"
+                  value="O"
+                  onChange={handleChange}
+                />
+                <label htmlFor="sexo-o">Otros</label>
+              </div>
             </div>
           </div>
-        </div>
 
-        <input name="telefono" placeholder="Teléfono" onChange={handleChange} />
+          <input name="telefono" placeholder="Teléfono" onChange={handleChange} />
 
-        <select name="tipo_seguro" onChange={handleChange}>
-          <option value="">Selecciona tipo de seguro</option>
-          <option value="Privado">Privado</option>
-          <option value="Aseguradora">Aseguradora</option>
-          <option value="Gobierno">Gobierno</option>
-          <option value="Indigente">Indigente</option>
-          <option value="Ninguno">Ninguno</option>
-        </select>
+          <select name="tipo_seguro" onChange={handleChange}>
+            <option value="">Selecciona tipo de seguro</option>
+            <option value="Privado">Privado</option>
+            <option value="Aseguradora">Aseguradora</option>
+            <option value="Gobierno">Gobierno</option>
+            <option value="Indigente">Indigente</option>
+            <option value="Ninguno">Ninguno</option>
+          </select>
 
-        <div className="emergency-card">
-          <h3>Contacto de emergencia</h3>
+          <div className="emergency-card">
+            <h3>Contacto de emergencia</h3>
 
-          <input
-            name="contacto_emergencia"
-            placeholder="Nombre contacto"
-            onChange={handleChange}
-          />
-          <input
-            name="telefono_emergencia"
-            placeholder="Teléfono contacto"
-            onChange={handleChange}
-          />
-        </div>
-        <button className="register-btn-primary">Guardar Datos</button>
-      </form>
-    </div>
+            <input
+              name="contacto_emergencia"
+              placeholder="Nombre contacto"
+              onChange={handleChange}
+            />
+
+            <input
+              name="telefono_emergencia"
+              placeholder="Teléfono contacto"
+              onChange={handleChange}
+            />
+          </div>
+
+          <button className="register-btn-primary">
+            Guardar Datos
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

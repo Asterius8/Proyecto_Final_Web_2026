@@ -5,22 +5,40 @@ import "../../styles/crear_cita.css";
 
 import { useNavigate } from "react-router-dom";
 
+import { sesionExpirada, cerrarSesion } from "../../utils/session";
+
 function CrearCitas() {
     const navigate = useNavigate();
 
-    // ================= STATES =================
-
-    // Guardar médicos obtenidos del backend
     const [medicos, setMedicos] = useState([]);
 
-    // Datos del formulario
     const [form, setForm] = useState({
         fecha: "",
         hora: "",
         medico: ""
     });
 
-    // ================= OBTENER MÉDICOS =================
+    const validarSesion = () => {
+
+        if (sesionExpirada()) {
+
+            cerrarSesion();
+
+            Swal.fire(
+                "Sesión expirada",
+                "Vuelve a iniciar sesión",
+                "warning"
+            ).then(() => {
+
+                navigate("/login");
+
+            });
+
+            return false;
+        }
+
+        return true;
+    };
 
     useEffect(() => {
 
@@ -28,7 +46,6 @@ function CrearCitas() {
 
     }, []);
 
-    // Función para traer médicos del backend
     const obtenerMedicos = async () => {
 
         try {
@@ -55,12 +72,10 @@ function CrearCitas() {
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "Error al conectar con el servidor weon"
+                text: "Error al conectar con el servidor"
             });
         }
     };
-
-    // ================= HANDLE CHANGE =================
 
     const handleChange = (e) => {
 
@@ -68,13 +83,12 @@ function CrearCitas() {
             ...form,
             [e.target.name]: e.target.value
         });
+
     };
 
     const validar = () => {
 
         let errores = [];
-
-        // ================= FECHA =================
 
         if (!form.fecha) {
 
@@ -82,26 +96,19 @@ function CrearCitas() {
 
         } else {
 
-            // Fecha actual
             const hoy = new Date();
 
-            // Quitar horas para comparar solo fecha
             hoy.setHours(0, 0, 0, 0);
 
-            // Fecha seleccionada
             const fechaSeleccionada = new Date(form.fecha);
 
             if (fechaSeleccionada < hoy) {
 
-                errores.push(
-                    "La fecha debe ser posterior o igual a hoy"
-                );
+                errores.push("La fecha debe ser posterior o igual a hoy");
 
             }
 
         }
-
-        // ================= HORA =================
 
         if (!form.hora) {
 
@@ -109,16 +116,13 @@ function CrearCitas() {
 
         } else {
 
-            // Convertir hora a número
             const [horas, minutos] = form.hora.split(":");
 
             const horaNumerica =
                 parseInt(horas) * 60 + parseInt(minutos);
 
-            // 08:00
             const horaMinima = 8 * 60;
 
-            // 18:00
             const horaMaxima = 18 * 60;
 
             if (
@@ -126,15 +130,11 @@ function CrearCitas() {
                 horaNumerica > horaMaxima
             ) {
 
-                errores.push(
-                    "La hora debe estar entre 08:00 y 18:00"
-                );
+                errores.push("La hora debe estar entre 08:00 y 18:00");
 
             }
 
         }
-
-        // ================= MÉDICO =================
 
         if (!form.medico) {
 
@@ -146,33 +146,31 @@ function CrearCitas() {
 
     };
 
-    // ================= ENVIAR FORMULARIO =================
-
     const handleSubmit = async (e) => {
 
         e.preventDefault();
 
         const errores = validar();
 
-        // Si hay errores
         if (errores.length > 0) {
 
             Swal.fire({
                 title: "Errores encontrados",
                 html: `
-          <ul style="text-align:left;">
-            ${errores.map(err => `<li>${err}</li>`).join("")}
-          </ul>
-        `,
+                    <ul style="text-align:left;">
+                        ${errores.map(err => `<li>${err}</li>`).join("")}
+                    </ul>
+                `,
                 icon: "error"
             });
 
             return;
         }
 
+        if (!validarSesion()) return;
+
         try {
 
-            // Obtener email guardado
             const email = localStorage.getItem("email");
 
             const res = await fetch(`${import.meta.env.VITE_API_URL}/citas`, {
@@ -191,8 +189,6 @@ function CrearCitas() {
 
             const data = await res.json();
 
-            // ================= RESPUESTA EXITOSA =================
-
             if (data.ok) {
 
                 Swal.fire({
@@ -201,7 +197,6 @@ function CrearCitas() {
                     icon: "success"
                 });
 
-                // Limpiar formulario
                 setForm({
                     fecha: "",
                     hora: "",
@@ -213,10 +208,10 @@ function CrearCitas() {
                 Swal.fire({
                     title: "Error",
                     html: `
-            <ul style="text-align:left;">
-              ${data.errores.map(err => `<li>${err}</li>`).join("")}
-            </ul>
-          `,
+                        <ul style="text-align:left;">
+                            ${data.errores.map(err => `<li>${err}</li>`).join("")}
+                        </ul>
+                    `,
                     icon: "error"
                 });
             }
@@ -231,12 +226,9 @@ function CrearCitas() {
         }
     };
 
-    // ================= HTML =================
-
     return (
 
         <div className="dashboard-form-wrapper">
-
 
             <div className="form-container">
 
@@ -252,7 +244,6 @@ function CrearCitas() {
 
                 <form onSubmit={handleSubmit}>
 
-                    {/* FECHA */}
                     <div className="form-group">
 
                         <label>Fecha de la Cita</label>
@@ -266,7 +257,6 @@ function CrearCitas() {
 
                     </div>
 
-                    {/* HORA */}
                     <div className="form-group">
 
                         <label>Hora de la Cita</label>
@@ -280,7 +270,6 @@ function CrearCitas() {
 
                     </div>
 
-                    {/* MÉDICOS */}
                     <div className="form-group">
 
                         <label>Médico y Especialidad</label>
@@ -315,11 +304,9 @@ function CrearCitas() {
 
                     </div>
 
-                    {/* BOTONES */}
                     <div className="form-actions">
 
                         <button
-
                             type="button"
                             className="btn btn-outline1"
                             onClick={() => navigate(-1)}
