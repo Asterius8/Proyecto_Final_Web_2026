@@ -15,6 +15,8 @@ import AdminDashboard from "./components/administrador/AdminDashboard";
 
 import PatientForm from "./components/paciente/PatientForm";
 
+import Error404 from "./components/errors/Error404";
+
 import './styles/landing_page.css';
 
 function App() {
@@ -45,6 +47,8 @@ function App() {
         {/* Inicio de sesión */}
         <Route path="/login" element={<Ingresar />} />
         <Route path="/admin" element={<AdminDashboard />} />
+
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
   );
