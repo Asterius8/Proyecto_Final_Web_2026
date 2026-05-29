@@ -20,5 +20,9 @@ router.post(
     citasController.crearCita
 );
 
+router.get("/admin", citasController.obtenerTodasCitas);
+
+router.delete("/:id", citasController.eliminarCita);
+
 // Exportamos
 module.exports = router;

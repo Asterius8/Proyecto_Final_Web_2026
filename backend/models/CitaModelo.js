@@ -163,9 +163,43 @@ function obtenerCitasPorPaciente(idPaciente) {
 
 }
 
+function obtenerTodasCitas() {
+    return new Promise((resolve, reject) => {
+        const sql = `
+      SELECT 
+        c.Id_Citas,
+        c.Fecha,
+        c.Hora,
+        c.Especialidad_Nombre,
+        CONCAT(p.Nombre, ' ', p.Apellido_Paterno, ' ', p.Apellido_Materno) AS Paciente
+      FROM citas c
+      INNER JOIN pacientes p
+        ON c.Pacientes_Id_Pacientes = p.Id_Pacientes
+    `;
+
+        db.query(sql, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
+}
+
+function eliminarCita(id) {
+    return new Promise((resolve, reject) => {
+        const sql = "DELETE FROM citas WHERE Id_Citas = ?";
+
+        db.query(sql, [id], (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
+}
+
 module.exports = {
     agregarCita,
     consultarMedico,
     obtenerIdPacientePorEmail,
-    obtenerCitasPorPaciente
+    obtenerCitasPorPaciente,
+    obtenerTodasCitas,
+    eliminarCita
 };

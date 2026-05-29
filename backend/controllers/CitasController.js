@@ -4,8 +4,50 @@ const {
     agregarCita,
     consultarMedico,
     obtenerIdPacientePorEmail,
-    obtenerCitasPorPaciente 
+    obtenerCitasPorPaciente,
+    obtenerTodasCitas,
+    eliminarCita
 } = require("../models/CitaModelo");
+
+exports.obtenerTodasCitas = async function (req, res) {
+    try {
+        const citas = await obtenerTodasCitas();
+
+        res.json({
+            ok: true,
+            citas
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        res.json({
+            ok: false,
+            errores: ["Error al obtener citas"]
+        });
+    }
+};
+
+exports.eliminarCita = async function (req, res) {
+    try {
+        const { id } = req.params;
+
+        await eliminarCita(id);
+
+        res.json({
+            ok: true,
+            mensaje: "Cita eliminada correctamente"
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        res.json({
+            ok: false,
+            errores: ["Error al eliminar cita"]
+        });
+    }
+};
 
 // ================= CREAR CITA =================
 
