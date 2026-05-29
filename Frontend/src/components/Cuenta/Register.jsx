@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import "../../styles/crear_cuenta.css";
 // Herramienta para mandar al usuario a otra página desde el código
 import { useNavigate } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Register() {
 
@@ -19,6 +20,8 @@ function Register() {
   const [errores, setErrores] = useState([]);
   // Prepara la función para redirigir al usuario a otra página
   const navigate = useNavigate();
+
+  const [captchaToken, setCaptchaToken] = useState("");
 
   // Esta función se ejecuta cuando el usuario hace clic en "Crear Cuenta"
   const handleSubmit = async (e) => {
@@ -38,6 +41,10 @@ function Register() {
       listaErrores.push("La contraseña debe tener al menos 6 caracteres");
     }
 
+    if (!captchaToken) {
+      listaErrores.push("Confirma que no eres un robot");
+    }
+
     // Si se encontró algún error, los muestra en pantalla y detiene el proceso
     if (listaErrores.length > 0) {
       setErrores(listaErrores);
@@ -51,7 +58,7 @@ function Register() {
         headers: {
           "Content-Type": "application/json", // Le avisa al servidor que los datos vienen en formato JSON
         },
-        body: JSON.stringify({ email, password }), // Convierte el correo y contraseña a texto para enviarlos
+        body: JSON.stringify({ email, password, captchaToken }), // Convierte el correo y contraseña a texto para enviarlos
       });
 
       // Convierte la respuesta del servidor a un objeto que podemos usar
@@ -131,6 +138,11 @@ function Register() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Ingresa tu contraseña"
+          />
+
+          <ReCAPTCHA
+            sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+            onChange={(token) => setCaptchaToken(token)}
           />
 
           {/* Botón que al presionarse envía el formulario */}

@@ -4,12 +4,13 @@ const bcrypt = require("bcrypt");
 const db = require("../config/db");
 // Importas el archivo UsuarioModel.js
 const Usuario = require("../models/usuarioModel");
+const axios = require("axios");
 
 // Función que se ejecuta cuando alguien intenta crear una cuenta nueva
 exports.register = async (req, res) => {
   try {
     // Saca el correo y la contraseña que el usuario envió desde el formulario
-    const { email, password } = req.body;
+    const { email, password, captchaToken } = req.body;
 
     // Crea una lista vacía donde se irán guardando los errores que se encuentren
     let errores = [];
@@ -18,6 +19,10 @@ exports.register = async (req, res) => {
     if (!email) errores.push("Correo obligatorio");
     // Si el usuario no escribió contraseña, agrega un error a la lista
     if (!password) errores.push("Contraseña obligatoria");
+
+    if (!captchaToken) {
+      errores.push("Captcha obligatorio");
+    }
 
     // Patrón que define cómo debe verse un correo válido (algo@algo.algo)
     const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,6 +39,24 @@ exports.register = async (req, res) => {
     // Si se encontró al menos un error, los devuelve al frontend y detiene el proceso
     if (errores.length > 0) {
       return res.json({ ok: false, errores });
+    }
+
+    const captchaResponse = await axios.post(
+      "https://www.google.com/recaptcha/api/siteverify",
+      null,
+      {
+        params: {
+          secret: process.env.RECAPTCHA_SECRET_KEY,
+          response: captchaToken
+        }
+      }
+    );
+
+    if (!captchaResponse.data.success) {
+      return res.json({
+        ok: false,
+        errores: ["Captcha inválido"]
+      });
     }
 
     // Convierte la contraseña en un código cifrado para guardarla segura
