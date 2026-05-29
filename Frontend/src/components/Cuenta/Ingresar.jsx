@@ -60,6 +60,7 @@ function Ingresar() {
       // Si el servidor dice que todo salió bien...
       if (data.ok) {
         localStorage.setItem("email", email);
+        localStorage.setItem("loginTime", Date.now());
         setErrores([]);
 
         if (data.mensaje === "Login exitoso") {
