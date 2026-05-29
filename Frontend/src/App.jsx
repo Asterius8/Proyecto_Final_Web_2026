@@ -57,8 +57,9 @@ function App() {
 
         {/* Inicio de sesión */}
         <Route path="/login" element={<Ingresar />} />
+        
         <Route
-          path="/admin/dashboard"
+          path="/admin"
           element={
             <ProtectedRoute>
               <AdminDashboard />
