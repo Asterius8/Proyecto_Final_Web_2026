@@ -185,8 +185,8 @@ function AdministrarMedicos() {
 
             {mostrarModal && (
                 <div className="modal-admin-medico">
-                    <div className="modal-content">
-                        <div className="modal-header">
+                    <div className="admin-modal-content">
+                        <div className="admin-modal-header">
                             <h3>Editar Médico</h3>
                             <button className="close-modal" onClick={() => setMostrarModal(false)}>
                                 ×
@@ -194,23 +194,23 @@ function AdministrarMedicos() {
                         </div>
 
                         <form onSubmit={editarMedico}>
-                            <div className="modal-body">
-                                <div className="form-group">
+                            <div className="admin-modal-body">
+                                <div className="admin-form-group">
                                     <label>Nombre</label>
                                     <input name="nombre" value={form.nombre} onChange={handleChange} />
                                 </div>
 
-                                <div className="form-group">
+                                <div className="admin-form-group">
                                     <label>Apellido Paterno</label>
                                     <input name="apellido_paterno" value={form.apellido_paterno} onChange={handleChange} />
                                 </div>
 
-                                <div className="form-group">
+                                <div className="admin-form-group">
                                     <label>Apellido Materno</label>
                                     <input name="apellido_materno" value={form.apellido_materno} onChange={handleChange} />
                                 </div>
 
-                                <div className="form-group">
+                                <div className="admin-form-group">
                                     <label>Especialidad</label>
                                     <select name="especialidad" value={form.especialidad} onChange={handleChange}>
                                         <option value="">Seleccione una especialidad</option>
@@ -222,7 +222,7 @@ function AdministrarMedicos() {
                                 </div>
                             </div>
 
-                            <div className="modal-actions">
+                           <div className="admin-modal-actions">
                                 <button type="button" className="btn btn-outline" onClick={() => setMostrarModal(false)}>
                                     Cancelar
                                 </button>
