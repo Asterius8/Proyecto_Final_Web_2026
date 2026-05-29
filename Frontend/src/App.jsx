@@ -17,6 +17,8 @@ import PatientForm from "./components/paciente/PatientForm";
 
 import Error404 from "./components/errors/Error404";
 
+import ProtectedRoute from "./components/routes/ProtectedRoute";
+
 import './styles/landing_page.css';
 
 function App() {
@@ -43,10 +45,26 @@ function App() {
         <Route path="/register" element={<Register />} />
         {/* Registro de paciente */}
         <Route path="/paciente" element={<PatientForm />} />
-        <Route path="/paciente/dashboard" element={<Dashboard />} />
+
+        <Route
+          path="/paciente/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
         {/* Inicio de sesión */}
         <Route path="/login" element={<Ingresar />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="*" element={<Error404 />} />
       </Routes>
