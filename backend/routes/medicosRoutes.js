@@ -12,8 +12,8 @@ router.get("/", medicosController.obtenerMedicos);
 router.post("/", medicosController.create);
 
 
-router.put("/:id", medicoController.update);
-router.delete("/:id", medicoController.remove);
+router.put("/:id", medicosController.update);
+router.delete("/:id", medicosController.remove);
 
 
 module.exports = router;
