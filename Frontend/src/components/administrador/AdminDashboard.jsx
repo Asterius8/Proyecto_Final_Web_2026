@@ -5,7 +5,7 @@ import "../../styles/dashboard.css";
 // ── Importa tus componentes reales aquí cuando los tengas ──
 import AgregarMedico from "./AgregarMedico";
 import AdministrarMedicos from "./AdministrarMedicos";
-// import EliminarCitas from "./EliminarCitas";
+import EliminarCitas from "./EliminarCitas";
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -25,10 +25,9 @@ function AdminDashboard() {
       case "administrar-medicos":
         return <AdministrarMedicos />;
       case "eliminar-citas":
-        // return <EliminarCitas />;
-        return <p>Aquí va la tabla de Eliminar Citas</p>;
+        return <EliminarCitas />;
       default:
-        return <p>Aquí va el formulario para Agregar Médico</p>;
+        return <AgregarMedico />;
     }
   };
 
