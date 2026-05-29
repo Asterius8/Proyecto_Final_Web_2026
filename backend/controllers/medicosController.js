@@ -2,7 +2,9 @@
 
 const {
     agregarMedico,
-    obtenerMedicos
+    obtenerMedicos,
+    editarMedico,
+    eliminarMedico
 } = require("../models/medicosModelo");
 
 exports.obtenerMedicos = async (req, res) => {
@@ -112,4 +114,59 @@ exports.create = async function (req, res) {
 
     }
 
+};
+
+exports.update = async function (req, res) {
+    try {
+        const id = req.params.id;
+
+        const {
+            nombre,
+            apellido_paterno,
+            apellido_materno,
+            especialidad
+        } = req.body;
+
+        const resultado = await editarMedico(
+            id,
+            nombre,
+            apellido_paterno,
+            apellido_materno,
+            especialidad
+        );
+
+        res.json({
+            ok: true,
+            mensaje: "Médico actualizado",
+            resultado
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.json({
+            ok: false,
+            errores: ["Error al modificar médico"]
+        });
+    }
+};
+
+exports.remove = async function (req, res) {
+    try {
+        const id = req.params.id;
+
+        const resultado = await eliminarMedico(id);
+
+        res.json({
+            ok: true,
+            mensaje: "Médico eliminado",
+            resultado
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.json({
+            ok: false,
+            errores: ["Error al eliminar médico"]
+        });
+    }
 };
