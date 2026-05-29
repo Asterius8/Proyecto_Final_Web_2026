@@ -162,29 +162,30 @@
 /* Modal Styles */
 .modal-admin-medico {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
 
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
+    background: rgba(0,0,0,.55);
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    z-index: 99999;
 }
 
-.modal-content {
-    background-color: white;
-    border-radius: 10px;
+.modal-admin-medico .modal-content {
+    background: #fff;
 
     width: 90%;
-    max-width: 500px;
+    max-width: 650px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 20px 40px rgba(0,0,0,.3);
 
     overflow: hidden;
 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
 }
 
 .modal-header {
