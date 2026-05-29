@@ -10,6 +10,25 @@ import EliminarCitas from "./EliminarCitas";
 function AdminDashboard() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      const loginTime = localStorage.getItem("loginTime");
+
+      const tiempoMaximo = 1 * 60 * 1000; // 1 minuto
+
+      if (!loginTime || Date.now() - Number(loginTime) > tiempoMaximo) {
+        localStorage.removeItem("email");
+        localStorage.removeItem("rol");
+        localStorage.removeItem("loginTime");
+        localStorage.removeItem("seccionActiva");
+
+        navigate("/login");
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalo);
+  }, [navigate]);
+
   const [seccionActiva, setSeccionActiva] = useState(
     localStorage.getItem("adminSeccion") || "agregar-medico"
   );
