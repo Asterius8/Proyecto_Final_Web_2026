@@ -68,6 +68,8 @@ function Register() {
       if (data.ok) {
         // Guarda el correo en el navegador para recordarlo después
         localStorage.setItem("email", email);
+        localStorage.setItem("rol", "Paciente");
+        localStorage.setItem("loginTime", Date.now().toString());
         // Borra cualquier error que hubiera en pantalla
         setErrores([]);
 

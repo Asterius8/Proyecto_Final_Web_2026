@@ -14,7 +14,7 @@ function AdminDashboard() {
     const intervalo = setInterval(() => {
       const loginTime = localStorage.getItem("loginTime");
 
-      const tiempoMaximo = 1 * 60 * 1000; // 1 minuto
+      const tiempoMaximo = 30 * 60 * 1000; // 1 minuto
 
       if (!loginTime || Date.now() - Number(loginTime) > tiempoMaximo) {
         localStorage.removeItem("email");

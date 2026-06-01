@@ -1,7 +1,7 @@
 export function sesionExpirada() {
   const loginTime = localStorage.getItem("loginTime");
 
-  const tiempoMaximo = 1 * 60 * 1000; // cambia aquí el tiempo
+  const tiempoMaximo = 60 * 60 * 1000; // cambia aquí el tiempo
 
   if (!loginTime) return true;
 

@@ -26,10 +26,8 @@ function VerCitas() {
 
             try {
 
-                // Email guardado
                 const email = localStorage.getItem("email");
 
-                // Validar
                 if (!email) {
 
                     Swal.fire(
@@ -41,7 +39,6 @@ function VerCitas() {
                     return;
                 }
 
-                // Fetch al backend
                 const res = await fetch(
                     `${import.meta.env.VITE_API_URL}/citas/paciente`,
                     {
@@ -49,22 +46,17 @@ function VerCitas() {
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({
-                            email
-                        })
+                        body: JSON.stringify({ email })
                     }
                 );
 
                 const data = await res.json();
-                // Si sale bien
+
                 if (data.ok) {
 
                     setCitas(data.citas);
 
-                }
-
-                // Si no hay citas
-                else {
+                } else {
 
                     Swal.fire({
                         icon: "warning",
@@ -90,62 +82,145 @@ function VerCitas() {
 
     }, []);
 
-    // ================= ACTIVAR DATATABLE =================
-    useEffect(() => {
+    // ================= ELIMINAR CITA =================
+    const eliminarCita = async (id) => {
 
-        if (citas.length === 0) return;
+        const confirmar = await Swal.fire({
+            title: "¿Eliminar cita?",
+            text: "Esta acción no se puede deshacer",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+        });
 
-        let tabla;
+        if (!confirmar.isConfirmed) return;
 
-        if ($.fn.DataTable.isDataTable(tablaRef.current)) {
+        try {
 
-            $(tablaRef.current)
-                .DataTable()
-                .destroy();
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/citas/${id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+            const data = await res.json();
+
+            if (data.ok) {
+
+                Swal.fire(
+                    "Eliminada",
+                    "La cita fue eliminada correctamente",
+                    "success"
+                );
+
+                setCitas((citasActuales) =>
+                    citasActuales.filter(
+                        (cita) => Number(cita.Id_Citas) !== Number(id)
+                    )
+                );
+
+            } else {
+
+                Swal.fire(
+                    "Error",
+                    data.errores?.[0] || "No se pudo eliminar la cita",
+                    "error"
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            Swal.fire(
+                "Error",
+                "No se pudo conectar con el servidor",
+                "error"
+            );
 
         }
 
-        tabla = $(tablaRef.current).DataTable({
+    };
 
+    // ================= ACTIVAR DATATABLE =================
+    useEffect(() => {
+
+        if (!tablaRef.current) return;
+
+        // Destruir instancia previa
+        if ($.fn.DataTable.isDataTable(tablaRef.current)) {
+            $(tablaRef.current).DataTable().destroy();
+            $(tablaRef.current).empty();
+        }
+
+        if (citas.length === 0) return;
+
+        const tabla = $(tablaRef.current).DataTable({
+            data: citas,
+            columns: [
+                {
+                    title: "Fecha",
+                    data: "Fecha",
+                    render: (data) => data.split("T")[0]
+                },
+                {
+                    title: "Hora",
+                    data: "Hora"
+                },
+                {
+                    title: "Médico",
+                    data: "Medico_Nombre"
+                },
+                {
+                    title: "Acciones",
+                    data: null,
+                    render: (data, type, row) =>
+                        `<button class="btn-detalles" data-id="${row.Id_Citas}" data-action="ver">
+                            <i class="fas fa-eye"></i>  Detalles
+                        </button>
+                        <button class="btn-eliminar" data-id="${row.Id_Citas}" data-action="eliminar">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>`
+                }
+            ],
             language: {
                 search: "Buscar:",
-                lengthMenu:
-                    "Mostrar _MENU_ registros",
-
-                info:
-                    "Mostrando _START_ a _END_ de _TOTAL_ citas",
-
+                lengthMenu: "Mostrar _MENU_ registros",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ citas",
                 paginate: {
                     next: "Siguiente",
                     previous: "Anterior"
                 },
-
-                emptyTable:
-                    "No hay citas registradas"
+                emptyTable: "No hay citas registradas"
             }
+        });
 
+        // Eventos delegados para los botones
+        $(tablaRef.current).on("click", "button[data-action='ver']", function () {
+            const id = $(this).data("id");
+            const cita = citas.find((c) => Number(c.Id_Citas) === Number(id));
+            if (cita) {
+                setCitaSeleccionada(cita);
+                setMostrarModal(true);
+            }
+        });
+
+        $(tablaRef.current).on("click", "button[data-action='eliminar']", function () {
+            const id = $(this).data("id");
+            eliminarCita(id);
         });
 
         return () => {
-
-            if (tabla) {
-
-                tabla.destroy();
-
+            $(tablaRef.current).off("click");
+            if ($.fn.DataTable.isDataTable(tablaRef.current)) {
+                $(tablaRef.current).DataTable().destroy();
             }
-
         };
 
     }, [citas]);
-
-    // ================= VER DETALLES =================
-    const verDetalles = (cita) => {
-
-        setCitaSeleccionada(cita);
-
-        setMostrarModal(true);
-
-    };
 
     // ================= RENDER =================
     return (
@@ -153,81 +228,22 @@ function VerCitas() {
         <div className="ver-citas-container">
 
             {/* HEADER */}
-            <div className="header">
+            <div className="header-citas">
 
                 <h1>Mis Citas Programadas</h1>
 
-                <p>
-                    Consulta todas tus citas médicas
-                </p>
+                <p>Consulta todas tus citas médicas</p>
 
             </div>
 
             {/* TABLA */}
-            <div className="citas-container">
+            <div className="citas-card">
 
                 <table
                     ref={tablaRef}
                     id="tablaCitas"
                     className="display citas-table"
-                >
-
-                    <thead>
-
-                        <tr>
-
-                            <th>Fecha</th>
-
-                            <th>Hora</th>
-
-                            <th>Médico</th>
-
-                            <th>Acciones</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {citas.map((cita, index) => (
-
-                            <tr key={index}>
-
-                                <td>{cita.Fecha.split("T")[0]}</td>
-
-                                <td>{cita.Hora}</td>
-
-                                <td>{cita.Medico_Nombre}</td>
-
-                                <td>
-
-                                    <button
-                                        className="btn-detalles"
-                                        onClick={() => {
-
-                                            setCitaSeleccionada(cita);
-
-                                            setMostrarModal(true);
-
-                                        }}
-                                    >
-
-                                        <i className="fas fa-eye"> </i>
-
-                                         Ver Detalles
-
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-                        ))}
-
-                    </tbody>
-
-                </table>
+                />
 
             </div>
 

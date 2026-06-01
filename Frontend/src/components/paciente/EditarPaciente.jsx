@@ -229,17 +229,28 @@ function EditarPerfil() {
               type="text"
               name="contacto_emergencia"
               value={form.contacto_emergencia}
-              onChange={handleChange}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  contacto_emergencia: e.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, "")
+                })
+              }
             />
           </div>
 
           <div className="form-group">
             <label>Teléfono del contacto</label>
             <input
-              type="text"
               name="telefono_emergencia"
+              placeholder="Teléfono contacto"
+              maxLength={10}
               value={form.telefono_emergencia}
-              onChange={handleChange}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  telefono_emergencia: e.target.value.replace(/\D/g, "").slice(0, 10),
+                })
+              }
             />
           </div>
         </div>

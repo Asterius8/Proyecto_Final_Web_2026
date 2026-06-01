@@ -5,7 +5,7 @@ function ProtectedRoute({ children }) {
   const loginTime = localStorage.getItem("loginTime");
 
   // 30 minutos     minutos * segundos * milisegundos
-  const tiempoMaximo = 2 * 60 * 1000;
+  const tiempoMaximo = 60 * 60 * 1000;
 
   if (!email || !loginTime) {
     return <Navigate to="/login" replace />;

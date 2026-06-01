@@ -61,6 +61,15 @@ function PatientForm() {
       errores.push("Fecha obligatoria");
     }
 
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    const fechaNacimiento = new Date(form.fecha_nac);
+
+    if (fechaNacimiento >= hoy) {
+      errores.push("La fecha de nacimiento debe ser anterior al día de hoy");
+    }
+
     if (!form.sexo) {
       errores.push("Selecciona sexo");
     }
@@ -142,21 +151,48 @@ function PatientForm() {
           <h2>Datos Personales</h2>
           <p className="subtitle">Completa tu información personal</p>
 
-          <input name="nombre" placeholder="Nombre" onChange={handleChange} />
+          <input
+            name="nombre"
+            placeholder="Nombre"
+            value={form.nombre}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                nombre: e.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, "")
+              })
+            }
+          />
 
           <input
             name="primer_apellido"
             placeholder="Primer Apellido"
-            onChange={handleChange}
+            value={form.primer_apellido}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                primer_apellido: e.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, "")
+              })
+            }
           />
 
           <input
             name="segundo_apellido"
             placeholder="Segundo Apellido"
-            onChange={handleChange}
+            value={form.segundo_apellido}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                segundo_apellido: e.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, "")
+              })
+            }
           />
 
-          <input type="date" name="fecha_nac" onChange={handleChange} />
+          <input
+            type="date"
+            name="fecha_nac"
+            max={new Date(Date.now() - 86400000).toISOString().split("T")[0]}
+            onChange={handleChange}
+          />
 
           <div className="form-group">
             <label>Sexo</label>
@@ -197,7 +233,18 @@ function PatientForm() {
             </div>
           </div>
 
-          <input name="telefono" placeholder="Teléfono" onChange={handleChange} />
+          <input
+            name="telefono"
+            placeholder="Teléfono"
+            maxLength={10}
+            value={form.telefono}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                telefono: e.target.value.replace(/\D/g, "").slice(0, 10),
+              })
+            }
+          />
 
           <select name="tipo_seguro" onChange={handleChange}>
             <option value="">Selecciona tipo de seguro</option>
@@ -214,13 +261,26 @@ function PatientForm() {
             <input
               name="contacto_emergencia"
               placeholder="Nombre contacto"
-              onChange={handleChange}
+              value={form.contacto_emergencia}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  contacto_emergencia: e.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, "")
+                })
+              }
             />
 
             <input
               name="telefono_emergencia"
               placeholder="Teléfono contacto"
-              onChange={handleChange}
+              maxLength={10}
+              value={form.telefono_emergencia}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  telefono_emergencia: e.target.value.replace(/\D/g, "").slice(0, 10),
+                })
+              }
             />
           </div>
 
